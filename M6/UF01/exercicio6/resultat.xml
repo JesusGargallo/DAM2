@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<rows>
+    <row _address="https://analisi.transparenciacatalunya.cat/resource/_6js6-vud6/row-z6f2-hfpa_46ig" _id="row-z6f2-hfpa_46ig" _position="0" _uuid="00000000-0000-0000-D92E-ADCE4962698B">
+        <bandol>Republicà</bandol>
+        <clau>Cementiri Sant Jaume Enveja_fossa</clau>
+        <comarca>Montsià</comarca>
+        <desapareguda>Si</desapareguda>
+        <estudi_ebre>Ebre</estudi_ebre>
+        <fitxa url="http://fossesirepressio.gencat.cat/ca/cementiri-sant-jaume-enveja"/>
+        <geocoded_column latitude="40.699243" longitude="0.71728"/>
+        <id>164459</id>
+        <idCategoria>Confirmada</idCategoria>
+        <municipi>Sant Jaume d'Enveja</municipi>
+        <notes>Fossa localitzada arran de l'estudi dut a terme per la Universitat Rovira i Virgili l'any 2016, per encàrrec de la Generalitat de Catalunya.Pròximament es completarà la informació d'aquesta fossa.</notes>
+        <numRestes>3</numRestes>
+        <titol>Cementiri de Sant Jaume d'Enveja</titol>
+        <x>0.71728</x>
+        <y>40.699243</y>
+    </row>
+    <row _address="https://analisi.transparenciacatalunya.cat/resource/_6js6-vud6/row-94y7.68qw~b3dz" _id="row-94y7.68qw~b3dz" _position="0" _uuid="00000000-0000-0000-CB3C-833A560B51BF">
+        <bandol>Rebel</bandol>
+        <clau>Cementiri de Masdenverge</clau>
+        <comarca>Montsià</comarca>
+        <desapareguda>No</desapareguda>
+        <estudi_ebre>Antiga</estudi_ebre>
+        <fitxa url="http://fossesirepressio.gencat.cat/ca/masdenverge-possiblement-al-cementiri"/>
+        <geocoded_column latitude="40.71169504" longitude="0.53620577"/>
+        <id>125906</id>
+        <idCategoria>Confirmada</idCategoria>
+        <municipi>Masdenverge</municipi>
+        <notes>Masdenverge, situat al costat d'Amposta, patí juntament amb aquesta darrera l'atac secundari per part de les tropes republicanes el 25 de juliol de 1938, que intentaven distreure les tropes franquistes de l'atac principal, que pretenia aprofundir en l'operació a partir de prendre Gandesa. A Masdenverge s'hi degueren enterrar els soldats franquistes morts els dies 26 i 27 de juliol, atès que les dades que es tenen de les dues fosses de les que es té coneixement, de 13 i 6 morts, identifiquen soldats franquistes.</notes>
+        <numRestes>13 i 6</numRestes>
+        <titol>Cementiri de Masdenverge</titol>
+        <x>0.53620577</x>
+        <y>40.71169504</y>
+    </row>
+    <row _address="https://analisi.transparenciacatalunya.cat/resource/_6js6-vud6/row-9aee.gimq.en3a" _id="row-9aee.gimq.en3a" _position="0" _uuid="00000000-0000-0000-DDFB-AB8F59A6B806">
+        <bandol>Rebel</bandol>
+        <clau>Cementiri de Santa Bárbara</clau>
+        <comarca>Montsià</comarca>
+        <desapareguda>No</desapareguda>
+        <estudi_ebre>Antiga</estudi_ebre>
+        <fitxa url="http://fossesirepressio.gencat.cat/ca/santa-barbara-probablement-al-cementiri"/>
+        <geocoded_column latitude="40.72543749" longitude="0.49530745"/>
+        <id>125910</id>
+        <idCategoria>Confirmada</idCategoria>
+        <municipi>Santa Bàrbara</municipi>
+        <notes>Santa Bàrbara, a pocs quilòmetres de Masdenverge, més allunyada del front, a la immediata reraguarda franquista, estigué molt propera a la línia de combat, sense que la població, però, hi estigués involucrada. És per aquest motiu que s'hi degué instal·lar un hospital militar i de fet la documentació així o indica. La data de les morts dels soldats van des del 29 de maig de 1938 fins el 13 de gener de 1939.</notes>
+        <numRestes>114</numRestes>
+        <titol>Cementiri de Santa Bárbara</titol>
+        <x>0.49530745</x>
+        <y>40.72543749</y>
+    </row>
+</rows>
