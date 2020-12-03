@@ -54,6 +54,7 @@ public class M6_UF2_act1 {
 					System.out.println("Afegeix un codi postal a la taula poblacions");
 				}
 			} else if (eleccio == 4){
+                            
 				System.out.println("Afegeix un nom de poblacio");
 				String nomPoblacio = teclado.next();
 				System.out.println("Afegeix un codi postal");
