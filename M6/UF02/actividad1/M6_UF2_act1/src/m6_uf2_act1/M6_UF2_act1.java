@@ -30,6 +30,7 @@ public class M6_UF2_act1 {
                         teclado.nextLine();
                         while(eleccio != 5){
                            if(eleccio == 1){
+                               
                                 System.out.println("Afegeix un NOM");
 				String nom = teclado.next();
 				System.out.println("Afegeix un DNI");
