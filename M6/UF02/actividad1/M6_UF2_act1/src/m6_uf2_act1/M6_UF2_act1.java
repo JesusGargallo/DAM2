@@ -67,6 +67,7 @@ public class M6_UF2_act1 {
                                     System.out.println("No es pot repetir el codi postal");
                                 }	
                         } else if (eleccio == 2){
+                            
 				System.out.println("Elegeix una taula");
 				String eleccioTaula = teclado.next();
 				System.out.println("Elegeix columna");
