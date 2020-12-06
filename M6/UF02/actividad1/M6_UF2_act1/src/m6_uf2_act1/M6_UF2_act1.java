@@ -81,7 +81,11 @@ public class M6_UF2_act1 {
                                 
 				ResultSet rs = (ResultSet) selectStmt.executeQuery("UPDATE " + eleccioTaula + " SET " + eleccioColumna + " = '" +valorColumna + " WHERE dni = '" + valorAnterior +"' )"); 
                         } 
+                           
+                       System.out.println("1- Afegir columnes(alumnes) | 2- Modificar columnes | 3- Eliminar columnes | 4- Afegir columnes(poblacions | 5-Salir)");
+                       eleccio = teclado.nextInt();    
                       }
+                        
                         
                         
 		} catch (Exception e) {
