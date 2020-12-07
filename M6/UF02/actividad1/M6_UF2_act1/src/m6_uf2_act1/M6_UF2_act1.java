@@ -83,7 +83,30 @@ public class M6_UF2_act1 {
 				//ResultSet rs = (ResultSet) selectStmt.executeQuery
                                 PreparedStatement pps = connection.prepareStatement("UPDATE " + eleccioTaula + " SET " + eleccioColumna + " = '" + valorColumna + "' WHERE Dni = '" + valorAnterior +"' ");
                                 pps.executeUpdate();
-                        } 
+                                
+                        } else if (eleccio == 3){
+				System.out.println("Afegeix un nom de poblacio");
+				String eleccioTaula = teclado.next();
+				System.out.println("Elegeix la columna");
+				String eleccioColumna = teclado.next();
+				System.out.println("1- VARCHAR | 2- INT");
+				int eleccioValor = teclado.nextInt();
+
+				if(eleccioValor == 1){
+					System.out.println("Afegeix el valor");
+					String valorColumna = teclado.next();
+
+					stmt = connection.createStatement();
+					stmt.execute("DELETE FROM " + eleccioTaula + " WHERE " + eleccioColumna + ">= '" + valorColumna + "' )");
+					
+				} else if (eleccioValor == 2){
+					System.out.println("Afegeix el valor");
+					int valorColumna = teclado.nextInt();
+
+					stmt = connection.createStatement();
+					stmt.execute("DELETE FROM " + eleccioTaula + " WHERE " + eleccioColumna + ">= " + valorColumna + " )");
+				}
+			}
                            
                        System.out.println("1- Afegir columnes(alumnes) | 2- Modificar columnes | 3- Eliminar columnes | 4- Afegir columnes(poblacions | 5-Salir)");
                        eleccio = teclado.nextInt();    
