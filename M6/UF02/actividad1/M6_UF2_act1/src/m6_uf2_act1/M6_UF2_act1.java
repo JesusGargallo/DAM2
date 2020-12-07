@@ -2,6 +2,7 @@ package m6_uf2_act1;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -38,7 +39,7 @@ public class M6_UF2_act1 {
 				System.out.println("Afegeix una data ->(1897-12-10)");
 				String data = teclado.next();
 				System.out.println("Afegeix una carrer");
-				String carrer = teclado.next();
+                                String carrer = teclado.next();
                                 teclado.nextLine();
                                 System.out.println("Afegeix el sexe");
 				String sexe = teclado.next();
@@ -48,7 +49,7 @@ public class M6_UF2_act1 {
 
 				try{
 					stmt = connection.createStatement();
-					stmt.execute("INSERT INTO alumnes VALUES ('" + nom + "',' " + dni + "',' " + data + "',' " + carrer + "','" + sexe + "'," + codiPostal + ")");
+					stmt.execute("INSERT INTO alumnes VALUES ('" + nom.trim() + "','" + dni.trim() + "','" + data + "','" + carrer + "','" + sexe + "'," + codiPostal + ")");
 
 				} catch(Exception e){					
 					System.out.println("Afegeix un codi postal a la taula poblacions");
@@ -62,7 +63,7 @@ public class M6_UF2_act1 {
                                 
                                 try{
                                     stmt = connection.createStatement();
-                                    stmt.execute("INSERT INTO alumnes VALUES ('" + nomPoblacio + "'," + codiPostalPoblacio + ")");
+                                    stmt.execute("INSERT INTO poblacions VALUES (" + codiPostalPoblacio + ",'" + nomPoblacio + "')");
                                 } catch (Exception e) {
                                     System.out.println("No es pot repetir el codi postal");
                                 }	
@@ -79,7 +80,9 @@ public class M6_UF2_act1 {
 
 				selectStmt = connection.createStatement();
                                 
-				ResultSet rs = (ResultSet) selectStmt.executeQuery("UPDATE " + eleccioTaula + " SET " + eleccioColumna + " = '" +valorColumna + " WHERE dni = '" + valorAnterior +"' )"); 
+				//ResultSet rs = (ResultSet) selectStmt.executeQuery
+                                PreparedStatement pps = connection.prepareStatement("UPDATE " + eleccioTaula + " SET " + eleccioColumna + " = '" + valorColumna + "' WHERE Dni = '" + valorAnterior +"' ");
+                                pps.executeUpdate();
                         } 
                            
                        System.out.println("1- Afegir columnes(alumnes) | 2- Modificar columnes | 3- Eliminar columnes | 4- Afegir columnes(poblacions | 5-Salir)");
@@ -87,12 +90,11 @@ public class M6_UF2_act1 {
                       }
                         
                         
-                        
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally {
 			try {
-				stmt.close();
+				
 				//selectStmt.close();
 				connection.close();
 			} catch (Exception e) {
