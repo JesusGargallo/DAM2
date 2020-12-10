@@ -46,6 +46,7 @@ public class M6_UF2_act1 {
                                 teclado.nextLine();
 				System.out.println("Afegeix un codi postal");
 				int codiPostal = teclado.nextInt();
+                                
 
 				try{
 					stmt = connection.createStatement();
@@ -69,20 +70,36 @@ public class M6_UF2_act1 {
                                 }	
                         } else if (eleccio == 2){
                             
+                            
 				System.out.println("Elegeix una taula");
 				String eleccioTaula = teclado.next();
-				System.out.println("Elegeix columna");
+                                System.out.println("Elegeix columna");
 				String eleccioColumna = teclado.next();
 				System.out.println("Afegeix el valor");
 				String valorColumna = teclado.next();
-                                System.out.println("Valor a modificar per DNI");
-                                String valorAnterior = teclado.next();
-
-				selectStmt = connection.createStatement();
+                                if(eleccioTaula.equalsIgnoreCase("alumnes")){
+                                    
+                                    System.out.println("Valor a modificar per DNI");
+                                    String valorAnterior = teclado.next();
+                                    
+                                    selectStmt = connection.createStatement();
                                 
-				//ResultSet rs = (ResultSet) selectStmt.executeQuery
-                                PreparedStatement pps = connection.prepareStatement("UPDATE " + eleccioTaula + " SET " + eleccioColumna + " = '" + valorColumna + "' WHERE Dni = '" + valorAnterior +"' ");
-                                pps.executeUpdate();
+                                    //ResultSet rs = (ResultSet) selectStmt.executeQuery
+                                    PreparedStatement pps = connection.prepareStatement("UPDATE " + eleccioTaula + " SET " + eleccioColumna + " = '" + valorColumna + "' WHERE Dni = '" + valorAnterior +"' ");
+                                    pps.executeUpdate();
+                                    
+                                } else {
+                                    System.out.println("Valor a modificar per codigo Postal");
+                                    int valorAnterior = teclado.nextInt();
+                                    
+                                    selectStmt = connection.createStatement();
+                                
+                                    //ResultSet rs = (ResultSet) selectStmt.executeQuery
+                                    PreparedStatement pps = connection.prepareStatement("UPDATE " + eleccioTaula + " SET " + eleccioColumna + " = '" + valorColumna + "' WHERE Cpostal = " + valorAnterior +" ");
+                                    pps.executeUpdate();
+                                }
+                                
+                    
                                 
                         } else if (eleccio == 3){
 				System.out.println("Elegeix una taula");
@@ -95,19 +112,36 @@ public class M6_UF2_act1 {
 				if(eleccioValor == 1){
 					System.out.println("Afegeix el valor");
 					String valorColumna = teclado.next();
-
                                         
-                                        PreparedStatement pps = connection.prepareStatement("DELETE FROM " + eleccioTaula + " WHERE " + eleccioColumna + ">= '" + valorColumna + "'");
-                                        pps.executeUpdate();
-					//stmt = connection.createStatement();
-					//stmt.execute("DELETE FROM " + eleccioTaula + " WHERE " + eleccioColumna + ">= '" + valorColumna + "' )");
-					
+                                        System.out.println("Es posible que es borrin alumnes estas segur 1-SI / 2-NO");
+                                        int opcio = teclado.nextInt();
+                                        if(opcio == 1){
+                                            PreparedStatement pps = connection.prepareStatement("DELETE FROM " + eleccioTaula + " WHERE " + eleccioColumna + ">= '" + valorColumna + "'");
+                                            pps.executeUpdate();
+                                            
+                                        } else {
+                                            
+                                            System.out.println("Se ha cancelat");
+                                        }
+                                        
+                                 	
 				} else if (eleccioValor == 2){
 					System.out.println("Afegeix el valor");
 					int valorColumna = teclado.nextInt();
-
-					stmt = connection.createStatement();
-					stmt.execute("DELETE FROM " + eleccioTaula + " WHERE " + eleccioColumna + ">= " + valorColumna + " )");
+                                        
+                                        
+                                        System.out.println("Es posible que es borrin alumnes estas segur 1-SI / 2-NO");
+                                        int opcio = teclado.nextInt();
+                                        if(opcio == 1){
+                                            
+                                            PreparedStatement pps = connection.prepareStatement("DELETE FROM " + eleccioTaula + " WHERE " + eleccioColumna + ">= " + valorColumna +" ");
+                                            pps.executeUpdate();
+                                            
+                                        } else {
+                                            
+                                            System.out.println("Se ha cancelat");
+                                        }
+					
 				}
 			}
                            
