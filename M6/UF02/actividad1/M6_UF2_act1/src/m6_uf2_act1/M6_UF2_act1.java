@@ -85,7 +85,7 @@ public class M6_UF2_act1 {
                                 pps.executeUpdate();
                                 
                         } else if (eleccio == 3){
-				System.out.println("Afegeix un nom de poblacio");
+				System.out.println("Elegeix una taula");
 				String eleccioTaula = teclado.next();
 				System.out.println("Elegeix la columna");
 				String eleccioColumna = teclado.next();
@@ -96,8 +96,11 @@ public class M6_UF2_act1 {
 					System.out.println("Afegeix el valor");
 					String valorColumna = teclado.next();
 
-					stmt = connection.createStatement();
-					stmt.execute("DELETE FROM " + eleccioTaula + " WHERE " + eleccioColumna + ">= '" + valorColumna + "' )");
+                                        
+                                        PreparedStatement pps = connection.prepareStatement("DELETE FROM " + eleccioTaula + " WHERE " + eleccioColumna + ">= '" + valorColumna + "'");
+                                        pps.executeUpdate();
+					//stmt = connection.createStatement();
+					//stmt.execute("DELETE FROM " + eleccioTaula + " WHERE " + eleccioColumna + ">= '" + valorColumna + "' )");
 					
 				} else if (eleccioValor == 2){
 					System.out.println("Afegeix el valor");
