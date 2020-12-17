@@ -130,37 +130,16 @@ public class M6_UF2_act1 {
 					System.out.println("Afegeix el valor");
 					String valorColumna = teclado.next();
                                         
-                                        if(eleccioTaula.equalsIgnoreCase("poblacions")){
-                                            
-                                            try{
-                                            selectStmt = connection.createStatement();
-                                            
-                                            rs2 = selectStmt.executeQuery("SELECT Cpostal FROM poblacions WHERE " + eleccioColumna + " = '" + valorColumna + "'");
-                                            rs = selectStmt.executeQuery("SELECT * FROM alumnes WHERE Cpostal = '" + rs2.toString() + "'");
-                                              while(rs.next()){
-                                                  conta++;
-                                              }
-
-                                              System.out.println("Se borraran " + conta + "alumnes quieres continuar 1-SI / 2-NO");
-                                              int opcio = teclado.nextInt();
-                                              if(opcio == 1){
+                                              if(eleccioTaula.equalsIgnoreCase("alumnes")){
 
                                                   PreparedStatement pps = connection.prepareStatement("DELETE FROM " + eleccioTaula + " WHERE " + eleccioColumna + " = '" + valorColumna + "'");
                                                   pps.executeUpdate();
 
                                               } else {
 
-                                              System.out.println("Se ha cancelat");
+                                              System.out.println("No pots borrar una població per el seu nom. ");
                                               
                                               }  
-                                           
-                                            
-                                            
-                                    
-                                            }catch(SQLException ex){
-
-                                            }
-                                        }
                                 	
 				} else if (eleccioValor == 2){
                                         System.out.println("Afegeix el valor");
@@ -176,7 +155,7 @@ public class M6_UF2_act1 {
                                                 conta++;
                                             }
                                             
-                                            System.out.println("Se borraran " + conta + "alumnes quieres continuar 1-SI / 2-NO");
+                                            System.out.println("Se borraran " + conta + " alumnes quieres continuar 1-SI / 2-NO");
                                             int opcio = teclado.nextInt();
                                             if(opcio == 1){
                                             
