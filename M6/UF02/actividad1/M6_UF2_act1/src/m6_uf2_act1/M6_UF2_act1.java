@@ -112,51 +112,89 @@ public class M6_UF2_act1 {
                     
                                 
                         } else if (eleccio == 3){
+                            int conta = 0;
+                            ResultSet rs = null;
+                            ResultSet rs2 = null;
+                            
 				System.out.println("Elegeix una taula");
 				String eleccioTaula = teclado.next();
 				System.out.println("Elegeix la columna");
 				String eleccioColumna = teclado.next();
 				System.out.println("1- VARCHAR | 2- INT");
 				int eleccioValor = teclado.nextInt();
+                                
+                                
 
 				if(eleccioValor == 1){
                                     
 					System.out.println("Afegeix el valor");
 					String valorColumna = teclado.next();
                                         
-                                        System.out.println("Es posible que es borrin alumnes estas segur 1-SI / 2-NO");
-                                        int opcio = teclado.nextInt();
-                                        
-                                        if(opcio == 1){
+                                        if(eleccioTaula.equalsIgnoreCase("poblacions")){
                                             
-                                            //PreparedStatement pps = connection.prepareStatement("DELETE FROM " + eleccioTaula + " WHERE " + eleccioColumna + ">= " + valorColumna +" ");
-                                            //pps.executeUpdate();
-                                            PreparedStatement pps = connection.prepareStatement("DELETE FROM " + eleccioTaula + " WHERE " + eleccioColumna + " = '" + valorColumna + "'");
-                                            pps.executeUpdate();
+                                            try{
+                                            selectStmt = connection.createStatement();
                                             
-                                        } else {
+                                            rs2 = selectStmt.executeQuery("SELECT Cpostal FROM poblacions WHERE " + eleccioColumna + " = '" + valorColumna + "'");
+                                            rs = selectStmt.executeQuery("SELECT * FROM alumnes WHERE Cpostal = '" + rs2.toString() + "'");
+                                              while(rs.next()){
+                                                  conta++;
+                                              }
+
+                                              System.out.println("Se borraran " + conta + "alumnes quieres continuar 1-SI / 2-NO");
+                                              int opcio = teclado.nextInt();
+                                              if(opcio == 1){
+
+                                                  PreparedStatement pps = connection.prepareStatement("DELETE FROM " + eleccioTaula + " WHERE " + eleccioColumna + " = '" + valorColumna + "'");
+                                                  pps.executeUpdate();
+
+                                              } else {
+
+                                              System.out.println("Se ha cancelat");
+                                              
+                                              }  
+                                           
                                             
-                                            System.out.println("Se ha cancelat");
+                                            
+                                    
+                                            }catch(SQLException ex){
+
+                                            }
                                         }
-                                        
-                                         
-                                 	
+                                	
 				} else if (eleccioValor == 2){
                                         System.out.println("Afegeix el valor");
 					int valorColumna = teclado.nextInt();
                                         
-                                        
-                                        System.out.println("Es posible que es borrin alumnes estas segur 1-SI / 2-NO");
-                                        int opcio = teclado.nextInt();
-                                        if(opcio == 1){
+                                        if(eleccioTaula.equalsIgnoreCase("poblacions")){
                                             
-                                            PreparedStatement pps = connection.prepareStatement("DELETE FROM " + eleccioTaula + " WHERE " + eleccioColumna + " = " + valorColumna +" ");
-                                            pps.executeUpdate();
+                                            try{
+                                            selectStmt = connection.createStatement();
                                             
-                                        } else {
+                                            rs = selectStmt.executeQuery("SELECT * FROM alumnes WHERE " + eleccioColumna + " = '" + valorColumna + "'");
+                                            while(rs.next()){
+                                                conta++;
+                                            }
+                                            
+                                            System.out.println("Se borraran " + conta + "alumnes quieres continuar 1-SI / 2-NO");
+                                            int opcio = teclado.nextInt();
+                                            if(opcio == 1){
+                                            
+                                                PreparedStatement pps = connection.prepareStatement("DELETE FROM " + eleccioTaula + " WHERE " + eleccioColumna + " = " + valorColumna +" ");
+                                                pps.executeUpdate();
+                                            
+                                            } else {
                                             
                                             System.out.println("Se ha cancelat");
                                         }
+                                            
+                                    
+                                            }catch(SQLException ex){
+
+                                            }
+                                        }
+                                        
+                                        
 					
 				}
 			}
