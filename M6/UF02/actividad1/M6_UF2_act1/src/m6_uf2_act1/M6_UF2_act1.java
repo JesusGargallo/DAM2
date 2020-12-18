@@ -33,8 +33,8 @@ public class M6_UF2_act1 {
                            if(eleccio == 1){
                                
                                 System.out.println("Afegeix un NOM");
-				String nom = teclado.next();
-				System.out.println("Afegeix un DNI");
+				String nom = teclado.nextLine();
+                                System.out.println("Afegeix un DNI");
 				String dni = teclado.next();
 				System.out.println("Afegeix una data ->(1897-12-10)");
 				String data = teclado.next();
@@ -55,6 +55,28 @@ public class M6_UF2_act1 {
 				} catch(Exception e){					
 					System.out.println("Afegeix un codi postal a la taula poblacions");
 				}
+                                
+                                try{
+                                    selectStmt = connection.createStatement();
+                                    ResultSet rs = null;
+                                    rs = selectStmt.executeQuery("SELECT * FROM alumnes");
+                                    
+                                    while(rs.next()==true){
+                                        nom = rs.getString("Nom");
+                                        dni = rs.getString("Dni");
+                                        data = rs.getString("Naixement");
+                                        carrer = rs.getString("Apostal");
+                                        sexe = rs.getString("Sexe");
+                                        codiPostal = rs.getInt("Cpostal");
+                                        
+                                        System.out.println("Nom [" + nom + "] DNI [" + dni + "] Naixement [" + data + "] Carrer [" + carrer + "] Sexe [" + sexe + "] Codi Postal [" + codiPostal + "]\n");
+                                        
+                                    }
+                                    
+                                }catch(Exception ex){
+                                   System.out.println("Error al visualitzar els alumnes " + ex);
+                                }
+                                
 			} else if (eleccio == 4){
                             
 				System.out.println("Afegeix un nom de poblacio");
@@ -67,7 +89,24 @@ public class M6_UF2_act1 {
                                     stmt.execute("INSERT INTO poblacions VALUES (" + codiPostalPoblacio + ",'" + nomPoblacio + "')");
                                 } catch (Exception e) {
                                     System.out.println("No es pot repetir el codi postal");
-                                }	
+                                }
+                                
+                                try{
+                                    selectStmt = connection.createStatement();
+                                    ResultSet rs = null;
+                                    rs = selectStmt.executeQuery("SELECT * FROM poblacions");
+                                    
+                                    while(rs.next()==true){
+                                        nomPoblacio = rs.getString("Poblacio");
+                                        codiPostalPoblacio = rs.getInt("Cpostal");
+                                        
+                                        System.out.println("Poblacio [" + nomPoblacio + "] Codi Postal [" + codiPostalPoblacio + "]\n");
+                                        
+                                    }
+                                    
+                                }catch(Exception ex){
+                                   System.out.println("Error al visualitzar les poblacions " + ex);
+                                }
                         } else if (eleccio == 2){
                             
                             
@@ -88,6 +127,27 @@ public class M6_UF2_act1 {
                                     PreparedStatement pps = connection.prepareStatement("UPDATE " + eleccioTaula + " SET " + eleccioColumna + " = '" + valorColumna + "' WHERE Dni = '" + valorAnterior +"' ");
                                     pps.executeUpdate();
                                     
+                                    try{
+                                    selectStmt = connection.createStatement();
+                                    ResultSet rs = null;
+                                    rs = selectStmt.executeQuery("SELECT * FROM alumnes");
+                                    
+                                    while(rs.next()==true){
+                                        String nom = rs.getString("Nom");
+                                        String dni = rs.getString("Dni");
+                                        String data = rs.getString("Naixement");
+                                        String carrer = rs.getString("Apostal");
+                                        String sexe = rs.getString("Sexe");
+                                        int codiPostal = rs.getInt("Cpostal");
+                                        
+                                        System.out.println("Nom [" + nom + "] DNI [" + dni + "] Naixement [" + data + "] Carrer [" + carrer + "] Sexe [" + sexe + "] Codi Postal [" + codiPostal + "]\n");
+                                        
+                                    }
+                                    
+                                }catch(Exception ex){
+                                   System.out.println("Error al visualitzar els alumnes " + ex);
+                                }
+                                    
                                 } else {
                                     System.out.println("Valor a modificar per codigo Postal");
                                     int valorAnterior = teclado.nextInt();
@@ -105,6 +165,23 @@ public class M6_UF2_act1 {
                                             
                                             System.out.println("Se ha cancelat");
                                         }
+                                        try{
+                                    selectStmt = connection.createStatement();
+                                    ResultSet rs = null;
+                                    rs = selectStmt.executeQuery("SELECT * FROM poblacions");
+                                    
+                                    while(rs.next()==true){
+                                        String nomPoblacio = rs.getString("Poblacio");
+                                        int codiPostalPoblacio = rs.getInt("Cpostal");
+                                        
+                                        System.out.println("Poblacio [" + nomPoblacio + "] Codi Postal [" + codiPostalPoblacio + "]\n");
+                                        
+                                    }
+                                    
+                                }catch(Exception ex){
+                                   System.out.println("Error al visualitzar les poblacions " + ex);
+                                }
+                                        
                                     //ResultSet rs = (ResultSet) selectStmt.executeQuery
                                     
                                 }
