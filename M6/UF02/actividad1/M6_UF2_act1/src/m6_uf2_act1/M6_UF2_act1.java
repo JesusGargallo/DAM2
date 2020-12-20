@@ -26,17 +26,18 @@ public class M6_UF2_act1 {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/m6_uf2_act1", "root", "");			
 
-			System.out.println("1- Afegir columnes(alumnes) | 2- Modificar columnes | 3- Eliminar columnes | 4- Afegir columnes(poblacions | 5-Salir)");
+			System.out.println("1- Afegir columnes(alumnes) | 2- Modificar columnes | 3- Eliminar columnes | 4- Afegir columnes(poblacions | 5-Llistar un alumnes o poblacio | 6- Salir)");
 			int eleccio = teclado.nextInt();
                         teclado.nextLine();
-                        while(eleccio != 5){
+                        while(eleccio != 6){
                            if(eleccio == 1){
                                
+                               
                                 System.out.println("Afegeix un NOM");
-				String nom = teclado.nextLine();
+				String nom = teclado.next();
                                 System.out.println("Afegeix un DNI");
 				String dni = teclado.next();
-				System.out.println("Afegeix una data ->(1897-12-10)");
+                                System.out.println("Afegeix una data ->(1897-12-10)");
 				String data = teclado.next();
 				System.out.println("Afegeix una carrer");
                                 String carrer = teclado.next();
@@ -76,6 +77,8 @@ public class M6_UF2_act1 {
                                 }catch(Exception ex){
                                    System.out.println("Error al visualitzar els alumnes " + ex);
                                 }
+                                
+                                
                                 
 			} else if (eleccio == 4){
                             
@@ -214,7 +217,7 @@ public class M6_UF2_act1 {
 
                                               } else {
 
-                                              System.out.println("No pots borrar una població per el seu nom. ");
+                                              System.out.println("No pots borrar una poblaciÃ³ per el seu nom. ");
                                               
                                               }  
                                 	
@@ -252,10 +255,90 @@ public class M6_UF2_act1 {
                                         
                                         
 					
-				}
-			}
+				} 
+			} else if (eleccio == 5){
+                                    try{
+                                    selectStmt = connection.createStatement();
+                                    
+                                    ResultSet rs1 = null;
+                                    
+                                    System.out.println("Elegeix una taula");
+                                    String eleccioTaula = teclado.next();
+                                    System.out.println("Elegeix la columna");
+                                    String eleccioColumna = teclado.next();
+                                    System.out.println("1- VARCHAR | 2- INT");
+                                    int eleccioValor = teclado.nextInt();
+                                    
+                                    if(eleccioValor == 1){
+                                       System.out.println("Afegeix el valor");
+                                       String valorColumna = teclado.next(); 
+                                       rs1 = selectStmt.executeQuery("SELECT * FROM " + eleccioTaula + " WHERE " + eleccioColumna + " ='" + valorColumna + "'");
+                                    
+                                    if(eleccioTaula.equalsIgnoreCase("alumnes")){
+                                       while(rs1.next()==true){
+                                            String nom = rs1.getString("Nom");
+                                            String dni = rs1.getString("Dni");
+                                            String data = rs1.getString("Naixement");
+                                            String carrer = rs1.getString("Apostal");
+                                            String sexe = rs1.getString("Sexe");
+                                            int codiPostal = rs1.getInt("Cpostal");
+
+                                        System.out.println("Nom [" + nom + "] DNI [" + dni + "] Naixement [" + data + "] Carrer [" + carrer + "] Sexe [" + sexe + "] Codi Postal [" + codiPostal + "]\n");
+                                        
+                                        } 
+                                    }else {
+                                       while(rs1.next()==true){
+                                        String nomPoblacio = rs1.getString("Poblacio");
+                                        int codiPostalPoblacio = rs1.getInt("Cpostal");
+                                        
+                                        System.out.println("Poblacio [" + nomPoblacio + "] Codi Postal [" + codiPostalPoblacio + "]\n");
+                                        
+                                        } 
+                                    }   
+                                    
+
+                                    } else if (eleccioValor == 2){
+                                        
+                                        
+                                        System.out.println("Afegeix el valor");
+					int valorColumna = teclado.nextInt();
+                                        rs1 = selectStmt.executeQuery("SELECT * FROM " + eleccioTaula + " WHERE " + eleccioColumna + " = " + valorColumna);
+                                    
+                                        if(eleccioTaula.equalsIgnoreCase("alumnes")){
+                                            while(rs1.next()==true){
+                                                 String nom = rs1.getString("Nom");
+                                                 String dni = rs1.getString("Dni");
+                                                 String data = rs1.getString("Naixement");
+                                                 String carrer = rs1.getString("Apostal");
+                                                 String sexe = rs1.getString("Sexe");
+                                                 int codiPostal = rs1.getInt("Cpostal");
+
+                                             System.out.println("Nom [" + nom + "] DNI [" + dni + "] Naixement [" + data + "] Carrer [" + carrer + "] Sexe [" + sexe + "] Codi Postal [" + codiPostal + "]\n");
+
+                                             } 
+                                         }else {
+                                            while(rs1.next()==true){
+                                             String nomPoblacio = rs1.getString("Poblacio");
+                                             int codiPostalPoblacio = rs1.getInt("Cpostal");
+
+                                             System.out.println("Poblacio [" + nomPoblacio + "] Codi Postal [" + codiPostalPoblacio + "]\n");
+
+                                         } 
+                                      
+                                        } 
+                                    }
+                                      
+                                    
+                                    
+                                }catch(Exception ex){
+                                   System.out.println("Error al visualitzar els alumnes " + ex);
+                                }
+                                 
+                                    
+                                    
+                                }
                            
-                       System.out.println("1- Afegir columnes(alumnes) | 2- Modificar columnes | 3- Eliminar columnes | 4- Afegir columnes(poblacions | 5-Salir)");
+                       System.out.println("1- Afegir columnes(alumnes) | 2- Modificar columnes | 3- Eliminar columnes | 4- Afegir columnes(poblacions | 5-Llistar un alumnes o poblacio | 6- Salir)");
                        eleccio = teclado.nextInt();    
                       }
                         
