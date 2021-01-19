@@ -24,23 +24,23 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace pref="103" max="32767" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="btCarregaUltima" min="-2" pref="200" max="-2" attributes="0"/>
+              <EmptySpace pref="118" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
                   <Component id="btNovaPartida" min="-2" pref="200" max="-2" attributes="0"/>
+                  <Component id="btCarregaUltima" min="-2" pref="200" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="97" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="112" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="89" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="133" max="-2" attributes="0"/>
               <Component id="btNovaPartida" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
               <Component id="btCarregaUltima" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="123" max="32767" attributes="0"/>
+              <EmptySpace pref="216" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -48,6 +48,9 @@
   <SubComponents>
     <Component class="javax.swing.JButton" name="btNovaPartida">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Tahoma" size="12" style="1"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Nova partida"/>
       </Properties>
       <Events>
@@ -56,7 +59,10 @@
     </Component>
     <Component class="javax.swing.JButton" name="btCarregaUltima">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Carrega ultima partida"/>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Tahoma" size="12" style="1"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Carrega &#xfa;ltima partida"/>
       </Properties>
     </Component>
   </SubComponents>

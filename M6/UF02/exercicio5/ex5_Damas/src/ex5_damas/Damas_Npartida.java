@@ -10,7 +10,13 @@ package ex5_damas;
  * @author Usuario
  */
 public class Damas_Npartida extends javax.swing.JFrame {
+    
+    boolean jugaX = true;
+    boolean jugaO = false;
+    int filaOrigen = -1;
+    int columnaOrigen = -1;
 
+    
     /**
      * Creates new form damas_Npartida
      */
@@ -27,22 +33,94 @@ public class Damas_Npartida extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btSortir = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tbTablero = new javax.swing.JTable();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        btSortir.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btSortir.setText("SORTIR");
+        btSortir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btSortirActionPerformed(evt);
+            }
+        });
+
+        tbTablero.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "1", "2", "3", "4", "5", "6", "7", "8"
+            }
+        ));
+        tbTablero.setRowHeight(30);
+        jScrollPane1.setViewportView(tbTablero);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(114, 114, 114)
+                .addComponent(btSortir, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(116, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(37, 37, 37)
+                .addComponent(btSortir)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(98, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btSortirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSortirActionPerformed
+        dispose();
+    }//GEN-LAST:event_btSortirActionPerformed
+
+    
+    private int obtenerFilaClicada(){
+        int fila = 0;
+        fila = tbTablero.getSelectedRow();
+        
+        return fila;
+    }
+    
+    private int obtenirColumnaClicada(){
+        int columna = 0;
+        columna = tbTablero.getSelectedColumn();
+        
+        return columna;
+        
+    }
+    
+    private boolean EsX(int fila,int columna){
+        boolean X;
+        
+        
+        return false;
+    }
+    
+    
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -80,5 +158,8 @@ public class Damas_Npartida extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btSortir;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tbTablero;
     // End of variables declaration//GEN-END:variables
 }

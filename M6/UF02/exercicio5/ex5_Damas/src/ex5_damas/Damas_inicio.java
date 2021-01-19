@@ -32,6 +32,7 @@ public class Damas_inicio extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        btNovaPartida.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btNovaPartida.setText("Nova partida");
         btNovaPartida.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -39,27 +40,28 @@ public class Damas_inicio extends javax.swing.JFrame {
             }
         });
 
-        btCarregaUltima.setText("Carrega ultima partida");
+        btCarregaUltima.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btCarregaUltima.setText("Carrega última partida");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(103, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btCarregaUltima, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btNovaPartida, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(97, 97, 97))
+                .addContainerGap(118, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btNovaPartida, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btCarregaUltima, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(112, 112, 112))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(89, 89, 89)
+                .addGap(133, 133, 133)
                 .addComponent(btNovaPartida)
-                .addGap(42, 42, 42)
+                .addGap(50, 50, 50)
                 .addComponent(btCarregaUltima)
-                .addContainerGap(123, Short.MAX_VALUE))
+                .addContainerGap(216, Short.MAX_VALUE))
         );
 
         pack();
@@ -68,6 +70,7 @@ public class Damas_inicio extends javax.swing.JFrame {
     private void btNovaPartidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNovaPartidaActionPerformed
         Damas_Npartida damas_Npartida = new Damas_Npartida();
         damas_Npartida.setVisible(true);
+        dispose();
     }//GEN-LAST:event_btNovaPartidaActionPerformed
 
     /**
