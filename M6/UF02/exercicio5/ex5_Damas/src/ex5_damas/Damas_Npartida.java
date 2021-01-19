@@ -112,11 +112,20 @@ public class Damas_Npartida extends javax.swing.JFrame {
     }
     
     private boolean EsX(int fila,int columna){
-        boolean X;
+        
         
         
         return false;
     }
+    
+    private boolean EsO(int fila,int columna){
+        
+        
+        
+        return false;
+    }
+    
+    
     
     
     
