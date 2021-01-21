@@ -5,6 +5,8 @@
  */
 package ex5_damas;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Usuario
@@ -49,20 +51,25 @@ public class Damas_Npartida extends javax.swing.JFrame {
 
         tbTablero.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
+                {"X", null, "X", null, "X", null, "X", null},
+                {null, "X", null, "X", null, "X", null, "X"},
                 {null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
+                {"O", null, "O", null, "O", null, "O", null},
+                {null, "O", null, "O", null, "O", null, "O"}
             },
             new String [] {
                 "1", "2", "3", "4", "5", "6", "7", "8"
             }
         ));
         tbTablero.setRowHeight(30);
+        tbTablero.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbTableroMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tbTablero);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -95,15 +102,19 @@ public class Damas_Npartida extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btSortirActionPerformed
 
+    private void tbTableroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbTableroMouseClicked
+       
+    }//GEN-LAST:event_tbTableroMouseClicked
+
     
-    private int obtenerFilaClicada(){
+    public int obtenerFilaClicada(){
         int fila = 0;
         fila = tbTablero.getSelectedRow();
         
         return fila;
     }
     
-    private int obtenirColumnaClicada(){
+    public int obtenirColumnaClicada(){
         int columna = 0;
         columna = tbTablero.getSelectedColumn();
         
@@ -111,19 +122,81 @@ public class Damas_Npartida extends javax.swing.JFrame {
         
     }
     
-    private boolean EsX(int fila,int columna){
-        
-        
-        
-        return false;
+    public boolean noHiHaOrigen (){
+        boolean noOrigen = false;
+        if(filaOrigen == -1 || columnaOrigen == -1){
+            noOrigen = true;
+        }
+        return noOrigen;
     }
     
-    private boolean EsO(int fila,int columna){
+    public boolean EsX(int fila,int columna){
+        boolean esx = false;
+        if(tbTablero.getValueAt(fila, columna).equals("X")){
+            esx = true;
+        }
         
         
-        
-        return false;
+        return esx;
     }
+    
+    public boolean EsO(int fila,int columna){
+        boolean eso = false;
+        if(tbTablero.getValueAt(fila, columna).equals("O")){
+            eso = true;
+        }
+        
+        
+        return eso;
+    }
+    
+    public void ActualitzaNouOrigen (){
+        filaOrigen = obtenirFilaClicada();
+        columnaOrigen = obtenirColumnaClicada();
+        
+    }
+    
+    public void mostrarError(){
+        JOptionPane.showMessageDialog(null, "Error", "Damas",
+                JOptionPane.ERROR_MESSAGE);
+    }
+    
+    public boolean esBuit (int fila, int columna) {
+        boolean esbuit = false;
+        if(tbTablero.getValueAt(fila, columna).equals("")){
+            esbuit = true;
+        }
+        
+        return esbuit;
+    }
+    
+    public boolean OcupatContrari(int fila , int columna){
+        boolean esocupat = false;
+        if((jugaX == true && EsO(fila, columna) == true) || 
+                (jugaO == true && EsX(fila,columna) == true)){
+            esocupat = true;
+        }
+        
+        
+        return esocupat;
+    }
+    
+    public boolean OcupatPropi(int fila, int columna){
+        boolean esocupatpropi = false;
+        if((jugaX == true && EsX(fila, columna) == true) || 
+                (jugaO == true && EsO(fila,columna) == true)){
+            esocupatpropi = true;
+        }
+        
+        return esocupatpropi;
+    }
+    
+    public void mostrarErrorMoviment(){
+        JOptionPane.showMessageDialog(null, "Moviment erroni", "Damas",
+                JOptionPane.ERROR_MESSAGE);
+    }
+    
+    
     
     
     
@@ -171,4 +244,20 @@ public class Damas_Npartida extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tbTablero;
     // End of variables declaration//GEN-END:variables
+
+    private int obtenirFilaClicada() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    //private boolean noHiHaOrigen() {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    //}
+
+    private void ActualitzaNouOrigen(int fila, int columna) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void mostraError() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
