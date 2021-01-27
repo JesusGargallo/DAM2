@@ -55,7 +55,7 @@ public class Damas_Npartida extends javax.swing.JFrame {
             new Object [][] {
                 {"O", "", "O", "", "O", "", "O", ""},
                 {"", "O", "", "O", "", "O", "", "O"},
-                {"O", "O", "O", "", "O", "", "O", ""},
+                {"O", "", "O", "", "O", "", "O", ""},
                 {null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null},
                 {"", "X", "", "X", "", "X", "", "X"},
@@ -105,28 +105,29 @@ public class Damas_Npartida extends javax.swing.JFrame {
     }//GEN-LAST:event_btSortirActionPerformed
 
     private void tbTableroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbTableroMouseClicked
-       if(noHiHaOrigen()) {
-           if(jugaX && EsX(obtenirFilaClicada(), obtenirColumnaClicada())){
-               ActualitzaNouOrigen(obtenirFilaClicada(), obtenirColumnaClicada());
-           } else if (jugaO && EsO(obtenirFilaClicada(), obtenirColumnaClicada())) {
-               ActualitzaNouOrigen(obtenirFilaClicada(), obtenirColumnaClicada());
-           } else {
-               mostrarError();
-           }
-       } else {
-           if (movimentValid(obtenirFilaClicada(), obtenirColumnaClicada())) {
-               if (esBuit(obtenirFilaClicada(), obtenirColumnaClicada()) 
-                       || OcupatContrari(obtenirFilaClicada(), obtenirColumnaClicada())) {
-                   mou(obtenirFilaClicada(), obtenirColumnaClicada());
-                   filaOrigen = -1;
-                   columnaOrigen = -1;
-               } else if (OcupatContrari(obtenirFilaClicada(), obtenirColumnaClicada())) {
-                   ActualitzaNouOrigen(obtenirFilaClicada(), obtenirColumnaClicada());
-               } else {
-                   mostrarErrorMoviment();
-               }
-           }
-       }
+        int fila = obtenirFilaClicada();
+        int columna = obtenirColumnaClicada();
+        
+        if(noHiHaOrigen()) {
+            
+            if (jugaX && EsX(fila, columna)) {
+                ActualitzaNouOrigen(fila, columna);
+            } else if (jugaO && EsO(fila, columna)) { 
+                ActualitzaNouOrigen(fila, columna);
+            } else {
+                mostrarError();
+            }
+        } else {
+            if (movimentValid(fila, columna)) {
+                if (esBuit(fila, columna) || OcupatContrari(fila, columna)) {
+                    mou(fila, columna);
+                }  else if (OcupatPropi(fila, columna)) {
+                    ActualitzaNouOrigen(fila, columna);
+                } 
+            } else {
+                    mostrarErrorMoviment();
+            }
+        }
     }//GEN-LAST:event_tbTableroMouseClicked
 
     
@@ -155,7 +156,7 @@ public class Damas_Npartida extends javax.swing.JFrame {
     
     public boolean EsX(int fila,int columna){
         boolean esx = false;
-        if(tbTablero.getValueAt(fila, columna).equals("X")){
+        if(tbTablero.getValueAt(fila, columna) == ("X")){
             esx = true;
         }
         
@@ -165,7 +166,7 @@ public class Damas_Npartida extends javax.swing.JFrame {
     
     public boolean EsO(int fila,int columna){
         boolean eso = false;
-        if(tbTablero.getValueAt(fila, columna).equals("O")){
+        if(tbTablero.getValueAt(fila, columna) == ("O")){
             eso = true;
         }
         
@@ -182,6 +183,9 @@ public class Damas_Npartida extends javax.swing.JFrame {
     public void mostrarError(){
         JOptionPane.showMessageDialog(null, "Error", "Damas",
                 JOptionPane.ERROR_MESSAGE);
+        
+        filaOrigen = -1;
+        columnaOrigen = -1;
     }
     
     public boolean movimentValid(int fila, int columna){
@@ -192,11 +196,11 @@ public class Damas_Npartida extends javax.swing.JFrame {
         int columnacalcul = columnaDesti - columnaOrigen;
         int filacalcul = filaDesti - filaOrigen;
         
-        if(EsX(fila, columna) && (columnacalcul == 1) && (filacalcul == 1) || 
-                (filacalcul == -1)){
+        if(jugaX && (filacalcul == -1) && ((columnacalcul == 1) || 
+                (columnacalcul == -1))){
             esmovimentvalid = true;
-        } else if (EsO (fila, columna) && (columnacalcul == 1) && (filacalcul == 1) 
-                || (filacalcul == -1)){
+        } else if (jugaO && (filacalcul == 1) && ((columnacalcul == 1) 
+                || (columnacalcul == -1))){
             esmovimentvalid = true;
         
         }
@@ -205,7 +209,7 @@ public class Damas_Npartida extends javax.swing.JFrame {
     
     public boolean esBuit (int fila, int columna) {
         boolean esbuit = false;
-        if(tbTablero.getValueAt(fila, columna).equals("")){
+        if(tbTablero.getValueAt(fila, columna) == null){
             esbuit = true;
         }
         
@@ -225,10 +229,14 @@ public class Damas_Npartida extends javax.swing.JFrame {
     
     public void mou(int fila , int columna){
         tbTablero.setValueAt("", filaOrigen, columnaOrigen);
-        if(jugaO){
-            tbTablero.setValueAt("O", fila, columna);
-        } else {
+        if(jugaX){
             tbTablero.setValueAt("X", fila, columna);
+            filaOrigen = -1;
+            columnaOrigen = -1;
+        } else {
+            tbTablero.setValueAt("O", fila, columna);
+            filaOrigen = -1;
+            columnaOrigen = -1;
         }
         
         
@@ -247,6 +255,10 @@ public class Damas_Npartida extends javax.swing.JFrame {
     public void mostrarErrorMoviment(){
         JOptionPane.showMessageDialog(null, "Moviment erroni", "Damas",
                 JOptionPane.ERROR_MESSAGE);
+        
+        filaOrigen = -1;
+        columnaOrigen = -1;
+        
     }
     
     

@@ -83,7 +83,7 @@
                 <Column editable="true" title="2" type="java.lang.Object">
                   <Data value=""/>
                   <Data value="O"/>
-                  <Data value="O"/>
+                  <Data value=""/>
                   <Data value="null"/>
                   <Data value="null"/>
                   <Data value="X"/>
