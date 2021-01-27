@@ -118,6 +118,8 @@ public class Damas_Npartida extends javax.swing.JFrame {
                if (esBuit(obtenirFilaClicada(), obtenirColumnaClicada()) 
                        || OcupatContrari(obtenirFilaClicada(), obtenirColumnaClicada())) {
                    mou(obtenirFilaClicada(), obtenirColumnaClicada());
+                   filaOrigen = -1;
+                   columnaOrigen = -1;
                } else if (OcupatContrari(obtenirFilaClicada(), obtenirColumnaClicada())) {
                    ActualitzaNouOrigen(obtenirFilaClicada(), obtenirColumnaClicada());
                } else {
