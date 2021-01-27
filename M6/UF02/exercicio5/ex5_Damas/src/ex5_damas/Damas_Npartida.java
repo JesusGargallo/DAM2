@@ -290,19 +290,4 @@ public class Damas_Npartida extends javax.swing.JFrame {
     private javax.swing.JTable tbTablero;
     // End of variables declaration//GEN-END:variables
 
-    private int obtenirFilaClicada() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    //private boolean noHiHaOrigen() {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    //}
-
-    private void ActualitzaNouOrigen(int fila, int columna) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    private void mostraError() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }
