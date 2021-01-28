@@ -121,6 +121,7 @@ public class Damas_Npartida extends javax.swing.JFrame {
             if (movimentValid(fila, columna)) {
                 if (esBuit(fila, columna) || OcupatContrari(fila, columna)) {
                     mou(fila, columna);
+                    ganador(fila, columna);
                 }  else if (OcupatPropi(fila, columna)) {
                     ActualitzaNouOrigen(fila, columna);
                 } 
@@ -166,7 +167,7 @@ public class Damas_Npartida extends javax.swing.JFrame {
     
     public boolean EsO(int fila,int columna){
         boolean eso = false;
-        if(tbTablero.getValueAt(fila, columna) == ("O")){
+        if(tbTablero.getValueAt(fila, columna) == ("O" )){
             eso = true;
         }
         
@@ -228,15 +229,24 @@ public class Damas_Npartida extends javax.swing.JFrame {
     }
     
     public void mou(int fila , int columna){
-        tbTablero.setValueAt("", filaOrigen, columnaOrigen);
+        int check = 0;
+        tbTablero.setValueAt(null, filaOrigen, columnaOrigen);
         if(jugaX){
             tbTablero.setValueAt("X", fila, columna);
             filaOrigen = -1;
             columnaOrigen = -1;
+            if(check == 0){
+                jugaX = false;
+                jugaO = true;
+            }
         } else {
             tbTablero.setValueAt("O", fila, columna);
             filaOrigen = -1;
             columnaOrigen = -1;
+            if(check == 0){
+                jugaX = true;
+                jugaO = false;
+            }
         }
         
         
@@ -258,6 +268,36 @@ public class Damas_Npartida extends javax.swing.JFrame {
         
         filaOrigen = -1;
         columnaOrigen = -1;
+        
+    }
+    
+    public void ganador(int fila, int columna){
+        
+        if(EsX(fila, columna) && fila == 0) {
+            jugaX = false; 
+            jugaO = false;
+            
+            JOptionPane.showMessageDialog(null, "X Guanyen", "Damas", 
+                JOptionPane.INFORMATION_MESSAGE);
+            
+            Damas_inicio damasI = new Damas_inicio();
+            
+            damasI.setVisible(true);
+            dispose();
+            
+        } else if (EsO(fila, columna) && fila == 7) {
+            jugaX = false; 
+            jugaO = false;
+            
+            JOptionPane.showMessageDialog(null, "O Guanyen", "Damas", 
+                JOptionPane.INFORMATION_MESSAGE);
+            
+            Damas_inicio damasI = new Damas_inicio();
+            
+            damasI.setVisible(true);
+            dispose();
+        }
+        
         
     }
     
