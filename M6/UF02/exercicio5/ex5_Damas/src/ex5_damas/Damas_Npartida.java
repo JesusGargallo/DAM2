@@ -5,13 +5,28 @@
  */
 package ex5_damas;
 
+import entity.Movimiento;
+import entity.Partida;
 import javax.swing.JOptionPane;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
 
 /**
  *
  * @author Usuario
  */
 public class Damas_Npartida extends javax.swing.JFrame {
+
+    private static void buildSessionFactory() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private static void addAnnotatedClass(Class<Movimiento> aClass) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     boolean jugaX = true;
     boolean jugaO = false;
@@ -302,35 +317,44 @@ public class Damas_Npartida extends javax.swing.JFrame {
     }
     
     
-    /**
-     * @param args the command line arguments
-     */
+    static SessionFactory FactoryS;
+    
+    
+    
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
+        
+        //configuracion session factory
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Damas_Npartida.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Damas_Npartida.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Damas_Npartida.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Damas_Npartida.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            Configuration config = new Configuration();
+            FactoryS = config.configure("hibernate.cfg.xml").
+                    addAnnotatedClass(Partida.class).
+                    addAnnotatedClass(Movimiento.class).
+                    buildSessionFactory();
+            
+        } catch (Throwable ex) {
+            System.err.println("Error!");
         }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
+        
+        
+        //crear sesion
+        Session session = FactoryS.openSession();
+        
+        Transaction transaction = null;
+        
+        Partida partida1 = new Partida();
+        
+        //guarda partida
+        try {
+            transaction = session.beginTransaction();
+            session.save(partida1);
+            transaction.commit();
+        } catch (HibernateException e) {
+            if (transaction != null) transaction.rollback();
+            System.err.println("Error!");
+        } finally {
+            session.close();
+        }
+        
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Damas_Npartida().setVisible(true);
