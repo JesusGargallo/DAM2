@@ -30,7 +30,7 @@ public class Damas_Npartida extends javax.swing.JFrame {
     int filaDesti = -1;
     int columnaDesti = -1;
     Partida partida = new Partida("");
-
+    Session session;
     
     /**
      * Creates new form damas_Npartida
@@ -288,6 +288,7 @@ public class Damas_Npartida extends javax.swing.JFrame {
         if(EsX(fila, columna) && fila == 0) {
             jugaX = false; 
             jugaO = false;
+            NewPartida("X");
             
             JOptionPane.showMessageDialog(null, "X Guanyen", "Damas", 
                 JOptionPane.INFORMATION_MESSAGE);
@@ -300,7 +301,7 @@ public class Damas_Npartida extends javax.swing.JFrame {
         } else if (EsO(fila, columna) && fila == 7) {
             jugaX = false; 
             jugaO = false;
-            
+            NewPartida("O");
             JOptionPane.showMessageDialog(null, "O Guanyen", "Damas", 
                 JOptionPane.INFORMATION_MESSAGE);
             
@@ -323,14 +324,14 @@ public class Damas_Npartida extends javax.swing.JFrame {
         
         partida.setGanador(ganador);
         try {
-            Session session = NewHibernateUtil.getSessionFactory().openSession();
+            session = NewHibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
-            session.save(partida);
+            session.saveOrUpdate(partida);
             session.getTransaction().commit();
         } catch (HibernateException he) {
             he.printStackTrace();
         }
-        
+        session.close();
     }
      
     
