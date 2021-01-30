@@ -7,8 +7,10 @@ package ex5_damas;
 
 import entity.Movimiento;
 import entity.Partida;
+import java.util.List;
 import javax.swing.JOptionPane;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -19,14 +21,7 @@ import org.hibernate.cfg.Configuration;
  * @author Usuario
  */
 public class Damas_Npartida extends javax.swing.JFrame {
-
-    private static void buildSessionFactory() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    private static void addAnnotatedClass(Class<Movimiento> aClass) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    
     
     boolean jugaX = true;
     boolean jugaO = false;
@@ -34,6 +29,7 @@ public class Damas_Npartida extends javax.swing.JFrame {
     int columnaOrigen = -1;
     int filaDesti = -1;
     int columnaDesti = -1;
+    Partida partida = new Partida("");
 
     
     /**
@@ -41,8 +37,9 @@ public class Damas_Npartida extends javax.swing.JFrame {
      */
     public Damas_Npartida() {
         initComponents();
+        NewPartida("VS");
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -316,45 +313,30 @@ public class Damas_Npartida extends javax.swing.JFrame {
         
     }
     
+    public void NewMoviment(int filaOrigen, int columnaOrigen, int filaDesti, int columnaDesti){
+        
+        
+        
+    }
     
-    static SessionFactory FactoryS;
-    
+    public void NewPartida(String ganador){
+        
+        partida.setGanador(ganador);
+        try {
+            Session session = NewHibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            session.save(partida);
+            session.getTransaction().commit();
+        } catch (HibernateException he) {
+            he.printStackTrace();
+        }
+        
+    }
+     
     
     
     public static void main(String args[]) {
-        
-        //configuracion session factory
-        try {
-            Configuration config = new Configuration();
-            FactoryS = config.configure("hibernate.cfg.xml").
-                    addAnnotatedClass(Partida.class).
-                    addAnnotatedClass(Movimiento.class).
-                    buildSessionFactory();
-            
-        } catch (Throwable ex) {
-            System.err.println("Error!");
-        }
-        
-        
-        //crear sesion
-        Session session = FactoryS.openSession();
-        
-        Transaction transaction = null;
-        
-        Partida partida1 = new Partida();
-        
-        //guarda partida
-        try {
-            transaction = session.beginTransaction();
-            session.save(partida1);
-            transaction.commit();
-        } catch (HibernateException e) {
-            if (transaction != null) transaction.rollback();
-            System.err.println("Error!");
-        } finally {
-            session.close();
-        }
-        
+                
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Damas_Npartida().setVisible(true);
@@ -367,5 +349,9 @@ public class Damas_Npartida extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tbTablero;
     // End of variables declaration//GEN-END:variables
+
+    private void displayResult(List resultList) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
 }
