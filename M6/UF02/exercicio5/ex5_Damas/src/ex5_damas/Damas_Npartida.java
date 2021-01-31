@@ -38,6 +38,7 @@ public class Damas_Npartida extends javax.swing.JFrame {
     public Damas_Npartida() {
         initComponents();
         NewPartida("VS");
+        
     }
     
     /**
@@ -242,6 +243,7 @@ public class Damas_Npartida extends javax.swing.JFrame {
     
     public void mou(int fila , int columna){
         int check = 0;
+        NewMoviment(filaOrigen,columnaOrigen, fila, columna);
         tbTablero.setValueAt(null, filaOrigen, columnaOrigen);
         if(jugaX){
             tbTablero.setValueAt("X", fila, columna);
@@ -315,8 +317,16 @@ public class Damas_Npartida extends javax.swing.JFrame {
     }
     
     public void NewMoviment(int filaOrigen, int columnaOrigen, int filaDesti, int columnaDesti){
-        
-        
+        Movimiento movimiento = new Movimiento(partida, columnaOrigen, columnaDesti, filaOrigen, filaDesti);
+        try{
+           session = NewHibernateUtil.getSessionFactory().openSession();
+           session.beginTransaction(); 
+           session.save(movimiento);
+           session.getTransaction().commit();
+        } catch (HibernateException he) {
+            he.printStackTrace();
+        }
+        session.close();
         
     }
     

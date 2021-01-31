@@ -42,6 +42,11 @@ public class Damas_inicio extends javax.swing.JFrame {
 
         btCarregaUltima.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btCarregaUltima.setText("Carrega última partida");
+        btCarregaUltima.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btCarregaUltimaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -71,7 +76,14 @@ public class Damas_inicio extends javax.swing.JFrame {
         Damas_Npartida damas_Npartida = new Damas_Npartida();
         damas_Npartida.setVisible(true);
         dispose();
+        
     }//GEN-LAST:event_btNovaPartidaActionPerformed
+
+    private void btCarregaUltimaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCarregaUltimaActionPerformed
+        Damas_repeticion damas_repeticion = new Damas_repeticion();
+        damas_repeticion.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btCarregaUltimaActionPerformed
 
     /**
      * @param args the command line arguments
