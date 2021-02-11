@@ -18,9 +18,14 @@ public class Exemple1 {
      */
     public static void main(String[] args) {
         JFrame frame = new JFrame("Test Frame 1");
-        frame.setSize(200,100);
+        //frame.setSize(200,100);
+        frame.setBounds(760 ,390,400,300);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+    
+    public void setBounds(int x, int y, int width, int height){
+        
     }
     
 }
