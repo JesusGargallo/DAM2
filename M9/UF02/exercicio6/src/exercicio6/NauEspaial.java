@@ -40,20 +40,22 @@ public class NauEspaial extends javax.swing.JFrame {
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setTitle("Naus Espaials");
         f.setContentPane(new PanelNau());
-        f.setSize(480, 560);
+        f.setSize(500, 580);
         f.setVisible(true);
         }
     }
 
 
 class PanelNau extends JPanel implements Runnable{
-    private int numNaus=50;    
+    private int numNaus=3;    
     Nau[] nau;
+    Nau minave;
+    Random rand;
 
     public PanelNau(){        
         nau = new Nau[numNaus];
         for (int i=0;i<nau.length;i++) {
-            Random rand = new Random();
+            rand = new Random();
             int velocitat=(rand.nextInt(3)+5)*10;
             int posX=rand.nextInt(100)+30;
             int posY=rand.nextInt(100)+30;
@@ -61,6 +63,7 @@ class PanelNau extends JPanel implements Runnable{
             int dY=rand.nextInt(3)+1;
             nau[i]= new Nau(i,posX,posY,dX,dY,velocitat);
             }
+        minave = new Nau(numNaus+9999, 240,430,3,0, rand.nextInt(rand.nextInt(3)+5)*10);
         Thread n = new Thread(this);
         n.start();   
         }
@@ -77,7 +80,9 @@ class PanelNau extends JPanel implements Runnable{
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         for(int i=0; i<nau.length;++i) nau[i].pinta(g);
+        minave.pinta(g);
         }
+        
     }
 
 
@@ -111,8 +116,8 @@ class Nau extends Thread {
         x=x + dsx;
         y=y + dsy;
         // si arriva als marges ...
-        if ( x>= 450 - tx || x<= tx) dsx = - dsx;
-        if ( y >= 500 - ty || y<=ty ) dsy = - dsy;
+        if ( x>= 440 - tx || x<= tx) dsx = - dsx;
+        if ( y >= 380 - ty || y<=ty ) dsy = - dsy;
         }
     
     public void pinta (Graphics g) {
