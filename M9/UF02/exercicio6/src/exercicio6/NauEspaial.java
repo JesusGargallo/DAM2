@@ -1,6 +1,8 @@
 package exercicio6;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.*;
 import javax.swing.*;
 
@@ -46,7 +48,7 @@ public class NauEspaial extends javax.swing.JFrame {
     }
 
 
-class PanelNau extends JPanel implements Runnable{
+class PanelNau extends JPanel implements Runnable, KeyListener{
     private int numNaus=3;    
     Nau[] nau;
     Nau minave;
@@ -63,9 +65,13 @@ class PanelNau extends JPanel implements Runnable{
             int dY=rand.nextInt(3)+1;
             nau[i]= new Nau(i,posX,posY,dX,dY,velocitat);
             }
-        minave = new Nau(numNaus+9999, 240,430,3,0, rand.nextInt(rand.nextInt(3)+5)*10);
+        minave = new Nau(numNaus+9999, 240,430,0,0, rand.nextInt(rand.nextInt(3)+5)*10);
         Thread n = new Thread(this);
         n.start();   
+        
+        //para que funcione el keyListener
+        this.addKeyListener(this);
+        setFocusable(true);
         }
 
     public void run() {
@@ -82,6 +88,31 @@ class PanelNau extends JPanel implements Runnable{
         for(int i=0; i<nau.length;++i) nau[i].pinta(g);
         minave.pinta(g);
         }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+        
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        
+        //System.out.println("Key pressed code=" + e.getKeyCode() + ", char=" + e.getKeyChar());
+        
+        int tecla = e.getKeyCode();
+        if(tecla == 68){
+            minave.moverDer();
+        }else if(tecla==65){
+            minave.moverIzq();
+        }
+        
+        
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        minave.moverNull();
+    }
         
     }
 
@@ -112,7 +143,7 @@ class Nau extends Thread {
         return v;
         }
     
-    public void moure (){
+    public synchronized void moure (){
         x=x + dsx;
         y=y + dsy;
         // si arriva als marges ...
@@ -120,7 +151,7 @@ class Nau extends Thread {
         if ( y >= 380 - ty || y<=ty ) dsy = - dsy;
         }
     
-    public void pinta (Graphics g) {
+    public synchronized void pinta (Graphics g) {
         Graphics2D g2d = (Graphics2D)g;
         g2d.drawImage(this.image, x, y, null);
         }
@@ -133,4 +164,17 @@ class Nau extends Thread {
             moure();
             }
         }
+    
+    public void moverIzq(){
+        this.dsx=-5;
+    }
+    
+    public void moverDer(){
+        this.dsx=5;
+    }
+    
+    public void moverNull(){
+        this.dsx=0;
+    }
+    
     }
