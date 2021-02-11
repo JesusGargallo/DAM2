@@ -47,7 +47,7 @@ public class NauEspaial extends javax.swing.JFrame {
 
 
 class PanelNau extends JPanel implements Runnable{
-    private int numNaus=3;    
+    private int numNaus=50;    
     Nau[] nau;
 
     public PanelNau(){        
@@ -98,7 +98,7 @@ class Nau extends Thread {
         this.dsx=dsx;
         this.dsy=dsy;
         this.v=v;
-        image = new ImageIcon(Nau.class.getResource("nau.png")).getImage();
+        image = new ImageIcon(Nau.class.getResource("nave.png")).getImage();
         Thread t = new Thread(this);
         t.start();
         }
