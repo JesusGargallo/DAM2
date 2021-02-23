@@ -6,6 +6,7 @@ import java.awt.event.KeyListener;
 import java.util.*;
 import javax.swing.*;
 
+
 public class NauEspaial extends javax.swing.JFrame {    
     
     public NauEspaial() {
@@ -42,17 +43,20 @@ public class NauEspaial extends javax.swing.JFrame {
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setTitle("Naus Espaials");
         f.setContentPane(new PanelNau());
-        f.setSize(500, 580);
+        f.setSize(480, 580);
         f.setVisible(true);
         }
     }
 
 
 class PanelNau extends JPanel implements Runnable, KeyListener{
-    private int numNaus=3;    
+    public static int numNaus=3;    
     Nau[] nau;
     Nau minave;
     Random rand;
+    
+    //shot
+    //Y
 
     public PanelNau(){        
         nau = new Nau[numNaus];
@@ -65,12 +69,11 @@ class PanelNau extends JPanel implements Runnable, KeyListener{
             int dY=rand.nextInt(3)+1;
             nau[i]= new Nau(i,posX,posY,dX,dY,velocitat);
             }
-        minave = new Nau(numNaus+9999, 240,430,0,0, rand.nextInt(rand.nextInt(3)+5)*10);
+        minave = new Nau(numNaus+9999, 240, 430, 0, 0, rand.nextInt(rand.nextInt(3)+5)*10);
         Thread n = new Thread(this);
-        n.start();   
+        n.start();
         
-        //para que funcione el keyListener
-        this.addKeyListener(this);
+        addKeyListener(this);
         setFocusable(true);
         }
 
@@ -91,29 +94,34 @@ class PanelNau extends JPanel implements Runnable, KeyListener{
 
     @Override
     public void keyTyped(KeyEvent e) {
-        
+         
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
         
-        //System.out.println("Key pressed code=" + e.getKeyCode() + ", char=" + e.getKeyChar());
-        
         int tecla = e.getKeyCode();
+        
         if(tecla == 68){
-            minave.moverDer();
-        }else if(tecla==65){
-            minave.moverIzq();
+            minave.moureR();
+        } else{
+            minave.moureL();
         }
+        
+        
         
         
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        minave.moverNull();
+        minave.moureNull();
     }
-        
+    
+    public int getNumNaus(){
+        return numNaus;
+    }
+    
     }
 
 
@@ -126,7 +134,7 @@ class Nau extends Thread {
 
     private String img = "/images/nau.jpg";
     private Image image;
-
+    
     public Nau(int numero, int x, int y, int dsx, int dsy, int v ) {
         this.numero = numero;
         this.x=x;
@@ -134,7 +142,13 @@ class Nau extends Thread {
         this.dsx=dsx;
         this.dsy=dsy;
         this.v=v;
-        image = new ImageIcon(Nau.class.getResource("nave.png")).getImage();
+        
+        if (numero == (PanelNau.numNaus+9999)){
+            image = new ImageIcon(Nau.class.getResource("nave.png")).getImage();
+        } else {
+            image = new ImageIcon(Nau.class.getResource("enemy.png")).getImage();
+        }
+        
         Thread t = new Thread(this);
         t.start();
         }
@@ -147,8 +161,8 @@ class Nau extends Thread {
         x=x + dsx;
         y=y + dsy;
         // si arriva als marges ...
-        if ( x>= 440 - tx || x<= tx) dsx = - dsx;
-        if ( y >= 380 - ty || y<=ty ) dsy = - dsy;
+        if ( x>= 420 - tx || x<= tx) dsx = - dsx;
+        if ( y >= 325 - ty || y<=ty ) dsy = - dsy;
         }
     
     public synchronized void pinta (Graphics g) {
@@ -164,17 +178,22 @@ class Nau extends Thread {
             moure();
             }
         }
-    
-    public void moverIzq(){
-        this.dsx=-5;
+
+    void moureL() {
+        if(! (x<= 0 - tx)) {
+            this.dsx = -2;
+        }
+        
     }
-    
-    public void moverDer(){
-        this.dsx=5;
+
+    void moureR() {
+        if(!( x>= 420 - tx)) {
+            this.dsx = 2;
+        }
     }
-    
-    public void moverNull(){
-        this.dsx=0;
+
+    void moureNull() {
+        this.dsx = 0;
     }
-    
-    }
+}
+
