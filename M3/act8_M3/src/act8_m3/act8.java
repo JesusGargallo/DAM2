@@ -24,9 +24,10 @@ public class act8 extends javax.swing.JFrame {
      */
     public act8() {
         initComponents();
-        ompleInformacio();
-        ompleTaula();
+        ompleInfo();
+        ompleTable();
         jTable1.setEnabled(false);
+        jTextPuntos.setEditable(false);
     }
 
     /**
@@ -200,8 +201,8 @@ public class act8 extends javax.swing.JFrame {
             contador = 0;
             contadorW = 0;
             contadorX = 0;
-            ompleInformacio();
-            ompleTaula();
+            ompleInfo();
+            ompleTable();
         }
     }//GEN-LAST:event_jReiniciarActionPerformed
 
@@ -240,7 +241,7 @@ public class act8 extends javax.swing.JFrame {
         });
     }
     
-    private void ompleInformacio() {
+    private void ompleInfo() {
         Random rand = new Random();         
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
@@ -266,7 +267,7 @@ public class act8 extends javax.swing.JFrame {
         }
     }
     
-    public void ompleTaula(){
+    public void ompleTable(){
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
                 jTable1.setValueAt("?", i, j);
