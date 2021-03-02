@@ -5,6 +5,9 @@
  */
 package act8_m3;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 import javax.swing.JOptionPane;
 
@@ -14,20 +17,19 @@ import javax.swing.JOptionPane;
  */
 public class act8 extends javax.swing.JFrame {
     
-    String cuadrados[][] = new String[4][4];
-    int contador = 0;
-    int contadorW = 0;
-    int contadorX = 0;
+    String[] arrayPanells = new String[] {"X","W","X","W","W","0","0","0","0","0","0","0","0","0","0","0"};
+    int i = 0;
+    List<String> strList = Arrays.asList(arrayPanells);
 
     /**
      * Creates new form act8
      */
     public act8() {
         initComponents();
-        ompleInfo();
-        ompleTable();
         jTable1.setEnabled(false);
         jTextPuntos.setEditable(false);
+        Collections.shuffle(strList);
+        arrayPanells = strList.toArray(new String[strList.size()]);
     }
 
     /**
@@ -87,6 +89,11 @@ public class act8 extends javax.swing.JFrame {
 
         jTextPuntos.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
         jTextPuntos.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        jTextPuntos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextPuntosActionPerformed(evt);
+            }
+        });
 
         jpuntoslabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jpuntoslabel.setText("Punts :");
@@ -151,60 +158,84 @@ public class act8 extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jSortirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jSortirActionPerformed
-        JOptionPane.showConfirmDialog(null,
-                "Has hecho " + contador + " puntos",
-                "El nuevo juego del año",
-                JOptionPane.DEFAULT_OPTION,
-                JOptionPane.PLAIN_MESSAGE);
-        dispose();
+        JOptionPane.showMessageDialog(null, "Has perdut, has fet " + jTextPuntos.getText() + " punt", "Game Over", 
+        JOptionPane.ERROR_MESSAGE);
+        System.exit(0);
     }//GEN-LAST:event_jSortirActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-        int fila = filaClicada();
-        int columna = columnaClicada();
+        if (jTable1.isEnabled()== true) {
         
-        if(jTable1.getValueAt(fila, columna) == "?") {
-            jTable1.setValueAt(cuadrados[fila][columna], fila, columna);
-            if("0".equals(cuadrados[fila][columna])) {
-                contador++;
-            } else if ("W".equals(cuadrados[fila][columna])) {
-                if (contador != 0) {
-                    contador = contador * 2;
+        if (jTable1.getValueAt(jTable1.getSelectedRow(), jTable1.getSelectedColumn()) == ("?")) {
+        jTable1.setValueAt(arrayPanells[i], jTable1.getSelectedRow(), jTable1.getSelectedColumn());
+        i++;
+        if (jTable1.getValueAt(jTable1.getSelectedRow(), jTable1.getSelectedColumn()) == ("0")) {
+            
+            String myString = jTextPuntos.getText();
+            int punts = Integer.parseInt(myString);
+            punts = punts + 1;
+            
+            jTextPuntos.setText(String.valueOf(punts));
+            
+            String myString2 = jrecordpuntos.getText();
+            
+            int puntsRecord = Integer.parseInt(myString2);
+                if (puntsRecord < punts) {
+                jrecordpuntos.setText(jTextPuntos.getText());
                 }
-            } else {
-                if(Integer.valueOf(jrecordpuntos.getText()) < contador) {
-                    jrecordpuntos.setText(String.valueOf(contador));
-                }
-                JOptionPane.showConfirmDialog(null,
-                "Has hecho " + contador + " puntos",
-                "El nuevo juego del año",
-                JOptionPane.DEFAULT_OPTION,
-                JOptionPane.PLAIN_MESSAGE);
-                jTable1.setEnabled(false);
-            }
+        } else if (jTable1.getValueAt(jTable1.getSelectedRow(), jTable1.getSelectedColumn()) == ("W")) {
+            
+            String myString = jTextPuntos.getText();
+            int punts = Integer.parseInt(myString);
+            
+            punts = punts * 2;
+            jTextPuntos.setText(String.valueOf(punts));
+            
+            String myString2 = jrecordpuntos.getText();
+            
+            int puntsRecord = Integer.parseInt(myString2);
+            
+            if (puntsRecord < punts) {
+                jrecordpuntos.setText(jTextPuntos.getText());
+              }
+        } else {
+            jocAcabat();
         }
-        jTextPuntos.setText(String.valueOf(contador));
-        System.out.println(contador);
+    } else {
+        mostraError();
+    }
+    } else {
+        JOptionPane.showMessageDialog(null, "Comença la partida primer! ", "Start game", 
+        JOptionPane.ERROR_MESSAGE); 
+    }
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void jReiniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jReiniciarActionPerformed
+        i=0;
+        jTextPuntos.setText("0");
         if(jReiniciar.getText().equalsIgnoreCase("començar")) {
-            jTable1.setEnabled(true);
-            jTextPuntos.setText(String.valueOf(0));
-            jReiniciar.setText("Reinicia Partida");
+            jReiniciar.setText("Reinicia pantalla");
         } else {
-            if(Integer.valueOf(jrecordpuntos.getText()) < contador) {
-                jrecordpuntos.setText(String.valueOf(contador));
-            }
-            jTable1.setEnabled(false);
             jReiniciar.setText("Començar");
-            contador = 0;
-            contadorW = 0;
-            contadorX = 0;
-            ompleInfo();
-            ompleTable();
+        }
+        
+        jTable1.setEnabled(true);
+        arrayPanells = new String[] {"X","W","X","W","W","0","0","0","0","0","0","0","0","0","0","0"};
+        strList = Arrays.asList(arrayPanells);
+        Collections.shuffle(strList);
+        arrayPanells = strList.toArray(new String[strList.size()]);
+        for (int i = 0; i<jTable1.getRowCount(); i++) {
+            jTable1.setValueAt("?", 0, i);
+            jTable1.setValueAt("?", 1, i);
+            jTable1.setValueAt("?", 2, i);
+            jTable1.setValueAt("?", 3, i);
+
         }
     }//GEN-LAST:event_jReiniciarActionPerformed
+
+    private void jTextPuntosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextPuntosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextPuntosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -241,47 +272,29 @@ public class act8 extends javax.swing.JFrame {
         });
     }
     
-    private void ompleInfo() {
-        Random rand = new Random();         
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4; j++) {
-                int rand_int1 = rand.nextInt(3); //0 o 1
-                if (rand_int1 == 0) {
-                    cuadrados[i][j] = "0";
-                } else if (rand_int1 == 1){
-                    if (contadorW != 3) {
-                        cuadrados[i][j] = "W";
-                        contadorW++;
-                    } else {
-                        cuadrados[i][j] = "0";
-                    }
-                } else {
-                    if (contadorX != 2) {
-                        cuadrados[i][j] = "X";
-                        contadorX++;
-                    } else {
-                        cuadrados[i][j] = "0";
-                    }
-                }
-            }
+    private boolean esBuit() {
+     return arrayPanells.equals("X");
+    }
+    
+    private void mostraError() {
+        JOptionPane.showMessageDialog(null, "Error, no pitjis un panel revelat", "Error Act8", 
+                JOptionPane.ERROR_MESSAGE);
+    }
+    
+    private void jocAcabat() {
+        String myString = jTextPuntos.getText();
+        int punts = Integer.parseInt(myString);
+        String myString2 = jrecordpuntos.getText();
+        int puntsRecord = Integer.parseInt(myString2);
+        if (puntsRecord < punts) {
+        jrecordpuntos.setText(jTextPuntos.getText());
         }
+        JOptionPane.showMessageDialog(null, "Has perdut, has fet " + jTextPuntos.getText() + " punt", "Game Over", 
+                JOptionPane.ERROR_MESSAGE);
+                jTable1.setEnabled(false);
     }
     
-    public void ompleTable(){
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4; j++) {
-                jTable1.setValueAt("?", i, j);
-            }
-        }
-    }
     
-     private int columnaClicada() {
-       return jTable1.getSelectedColumn();
-    }
-    
-    private int filaClicada() {
-        return jTable1.getSelectedRow();
-    }
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
