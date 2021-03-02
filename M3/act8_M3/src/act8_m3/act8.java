@@ -17,19 +17,26 @@ import javax.swing.JOptionPane;
  */
 public class act8 extends javax.swing.JFrame {
     
-    String[] arrayPanells = new String[] {"X","W","X","W","W","0","0","0","0","0","0","0","0","0","0","0"};
+    String[] arrayPanells = new String[] 
+        {"0","W","X","W","W","0","0","0","X","0","0","0","0","0","0","0"};
     int i = 0;
-    List<String> strList = Arrays.asList(arrayPanells);
+    List<String> List = Arrays.asList(arrayPanells);
 
     /**
      * Creates new form act8
      */
     public act8() {
+        
         initComponents();
+        
         jTable1.setEnabled(false);
+        
         jTextPuntos.setEditable(false);
-        Collections.shuffle(strList);
-        arrayPanells = strList.toArray(new String[strList.size()]);
+        
+        Collections.shuffle(List);
+        
+        arrayPanells = List.toArray(new String[List.size()]);
+        
     }
 
     /**
@@ -199,7 +206,7 @@ public class act8 extends javax.swing.JFrame {
                 jrecordpuntos.setText(jTextPuntos.getText());
               }
         } else {
-            jocAcabat();
+            juegoacabado();
         }
     } else {
         mostraError();
@@ -213,18 +220,29 @@ public class act8 extends javax.swing.JFrame {
     private void jReiniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jReiniciarActionPerformed
         i=0;
         jTextPuntos.setText("0");
+        
         if(jReiniciar.getText().equalsIgnoreCase("començar")) {
+            
             jReiniciar.setText("Reinicia pantalla");
+            
         } else {
+            
             jReiniciar.setText("Començar");
+            
         }
         
         jTable1.setEnabled(true);
-        arrayPanells = new String[] {"X","W","X","W","W","0","0","0","0","0","0","0","0","0","0","0"};
-        strList = Arrays.asList(arrayPanells);
-        Collections.shuffle(strList);
-        arrayPanells = strList.toArray(new String[strList.size()]);
+        
+        arrayPanells = new String[] {"0","W","X","W","W","0","0","X","0","0","0","0","0","0","0","0"};
+        
+        List = Arrays.asList(arrayPanells);
+        
+        Collections.shuffle(List);
+        
+        arrayPanells = List.toArray(new String[List.size()]);
+        
         for (int i = 0; i<jTable1.getRowCount(); i++) {
+            
             jTable1.setValueAt("?", 0, i);
             jTable1.setValueAt("?", 1, i);
             jTable1.setValueAt("?", 2, i);
@@ -234,7 +252,9 @@ public class act8 extends javax.swing.JFrame {
     }//GEN-LAST:event_jReiniciarActionPerformed
 
     private void jTextPuntosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextPuntosActionPerformed
-        // TODO add your handling code here:
+        
+        
+        
     }//GEN-LAST:event_jTextPuntosActionPerformed
 
     /**
@@ -272,22 +292,32 @@ public class act8 extends javax.swing.JFrame {
         });
     }
     
-    private boolean esBuit() {
-     return arrayPanells.equals("X");
-    }
-    
     private void mostraError() {
+        
         JOptionPane.showMessageDialog(null, "Error, no pitjis un panel revelat", "Error Act8", 
                 JOptionPane.ERROR_MESSAGE);
+        
     }
     
-    private void jocAcabat() {
+    private boolean esBuit() {
+        
+     return arrayPanells.equals("X");
+     
+    }
+    
+    
+    
+    private void juegoacabado() {
+        
         String myString = jTextPuntos.getText();
         int punts = Integer.parseInt(myString);
         String myString2 = jrecordpuntos.getText();
         int puntsRecord = Integer.parseInt(myString2);
+        
         if (puntsRecord < punts) {
+            
         jrecordpuntos.setText(jTextPuntos.getText());
+        
         }
         JOptionPane.showMessageDialog(null, "Has perdut, has fet " + jTextPuntos.getText() + " punt", "Game Over", 
                 JOptionPane.ERROR_MESSAGE);
