@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 
 /**
  *
@@ -70,7 +71,7 @@ class PanelNau extends JPanel implements Runnable, KeyListener{
     Nau[] nau;
     Nau minave;
     Random rand;
-    
+    Shot balas[] = new Shot[5];
     //shot
     //Y
 
@@ -85,7 +86,7 @@ class PanelNau extends JPanel implements Runnable, KeyListener{
             int dY=rand.nextInt(3)+1;
             nau[i]= new Nau(i,posX,posY,dX,dY,velocitat);
             }
-        minave = new Nau(numNaus+9999, 240, 430, 0, 0, rand.nextInt(rand.nextInt(3)+5)*10);
+        minave = new Nau(numNaus+9999, 240, 430, 0, 0, 5/*rand.nextInt(rand.nextInt(3)+5)*10*/);
         Thread n = new Thread(this);
         n.start();
         
@@ -96,7 +97,7 @@ class PanelNau extends JPanel implements Runnable, KeyListener{
     public void run() {
         System.out.println("Inici fil repintar");
         while(true) {
-            try { Thread.sleep(100);} catch(Exception e) {} // espero 0,1 segons
+            try { Thread.sleep(1);} catch(Exception e) {} // espero 0,1 segons
             System.out.println("Repintant");
             repaint();            
             }                   
@@ -106,7 +107,11 @@ class PanelNau extends JPanel implements Runnable, KeyListener{
         super.paintComponent(g);
         for(int i=0; i<nau.length;++i) nau[i].pinta(g);
         minave.pinta(g);
+        for(int i=0; i < minave.shots.size() ;++i) minave.shots.get(i).pinta(g);
+            
         }
+  
+        
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -120,12 +125,11 @@ class PanelNau extends JPanel implements Runnable, KeyListener{
         
         if(tecla == 68){
             minave.moureR();
-        } else{
+        } else if (tecla == 65) {
             minave.moureL();
-        }
-        
-        
-        
+        }else if (tecla == 32) {
+            minave.disparar();
+        }   
         
     }
 
@@ -141,12 +145,22 @@ class PanelNau extends JPanel implements Runnable, KeyListener{
     }
 
 
+
 class Nau extends Thread {
     private int numero;
     private int x,y;
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
     private int dsx,dsy,v;
     private int tx = 10;
     private int ty = 10;
+    ArrayList<Shot> shots = new ArrayList<Shot>();
 
     private String img = "/images/nau.jpg";
     private Image image;
@@ -211,7 +225,49 @@ class Nau extends Thread {
     void moureNull() {
         this.dsx = 0;
     }
+    
+    public void disparar() {
+        System.out.println("pium");
+        
+        shots.add(new Shot(this.x, this.y ,5));
+    }
+    
 }
 
+ 
+class Shot extends Thread {
+    private int x,y,v;
+    private int dsy = 1, dsx = 0;
+    private Image image;
+    
+    public Shot(int x, int y, int v) {
+        this.x = x;
+        this.y = y;
+        this.v = v;
+        
+        Thread the = new Thread(this);
+        image = new ImageIcon(Nau.class.getResource("shot.png")).getImage();
+        this.start();
+    }
+    
+    public void run() {
+        while (true) {
+            System.out.println("Moviendo bala nau numero ");
+            try { Thread.sleep(this.v); } catch (Exception e) {}
+                moure();
+            }
+        }
+    
+    public synchronized void moure (){
+        y=y - dsy;
+
+    }
+    
+    public synchronized void pinta (Graphics g) {
+        Graphics2D g2d = (Graphics2D)g;
+        g2d.drawImage(this.image, x, y, null);
+    }
+    
+}
     
 
