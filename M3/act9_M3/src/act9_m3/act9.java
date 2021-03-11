@@ -13,9 +13,12 @@ import javax.swing.table.DefaultTableModel;
  */
 public class act9 extends javax.swing.JFrame {
 
-    /**
-     * Creates new form act9
-     */
+    
+    boolean movimentValid, turnoB;
+    int fila = -1, col = -1, filadestino = -1, coldestino = -1, check = 0;
+    Ficha ficha, fichadestino;
+    
+    
     public act9() {
         initComponents();
         llenarTabla();
@@ -33,6 +36,7 @@ public class act9 extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -52,7 +56,19 @@ public class act9 extends javax.swing.JFrame {
             }
         ));
         jTable1.setRowHeight(50);
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
+
+        jButton1.setText("Reiniciar");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -61,18 +77,55 @@ public class act9 extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 469, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(246, Short.MAX_VALUE))
+                .addGap(35, 35, 35)
+                .addComponent(jButton1)
+                .addContainerGap(138, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(24, 24, 24)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 435, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 435, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(86, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        if ((fila == -1 && col == -1) || check == 0) {
+            fila = filaTabla();
+            col = colTabla();
+            check = 1;
+            ficha = new Ficha(fila,col,jTable1,turnoB);
+            System.out.println("La letra es:" + ficha.getTipo());
+            
+        } else if (ficha.perteneceTurno()){
+            filadestino = filaTabla();
+            coldestino = colTabla();
+            check = 0;
+            fichadestino = new Ficha(filadestino,coldestino,jTable1,turnoB);
+            System.out.println("La letra es:" + fichadestino.getTipo());
+            if(!fichadestino.perteneceTurno() && ficha.movimientoValido(fichadestino, jTable1)) {
+                jTable1.setValueAt(jTable1.getValueAt(fila, col), filadestino, coldestino);
+                jTable1.setValueAt("·",fila,col);
+                System.out.println("Haz algo");
+                turnoB = !turnoB;
+                        
+                
+            }
+            
+            
+        } else {
+            check = 0;
+        }
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        llenarTabla();
+    }//GEN-LAST:event_jButton1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -110,11 +163,14 @@ public class act9 extends javax.swing.JFrame {
     }
     
     public void llenarTabla() {
-        Object negras[] = {'T', 'C', 'A', 'Q', 'K', 'A', 'C', 'T'};
-        Object PN[] = {'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P'};
-        Object FilaBuit[] = {'-', '-', '-', '-', '-', '-', '-', '-'};
-        Object blancas[] = {'t', 'c', 'a', 'q', 'k', 'a', 'c', 't'};
-        Object PB[] = {'p', 'p', 'p', 'p', 'p', 'p', 'p', 'p'};
+        turnoB = true;
+        
+        Object negras[] = {'t', 'c', 'a', 'q', 'k', 'a', 'c', 't'};
+        Object PN[] = {'p', 'p', 'p', 'p', 'p', 'p', 'p', 'p'};
+        Object FilaBuit[] = {'·', '·', '·', '·', '·', '·', '·', '·'};
+        Object blancas[] = {'T', 'C', 'A', 'Q', 'K', 'A', 'C', 'T'};
+        Object PB[] = {'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P'};
+        
         
         DefaultTableModel model = new DefaultTableModel();
         model.addColumn("A");
@@ -139,14 +195,27 @@ public class act9 extends javax.swing.JFrame {
         
         
         jTable1.setModel(model);
-        
+        jTable1.setDefaultEditor(Object.class, null);
+        fila = -1;
+        col = -1;
+        filadestino = -1;
+        coldestino = -1;
         
         
         
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
+
+    private int filaTabla() {
+        return jTable1.getSelectedRow();
+    }
+
+    private int colTabla() {
+        return jTable1.getSelectedColumn();
+    }
 }
