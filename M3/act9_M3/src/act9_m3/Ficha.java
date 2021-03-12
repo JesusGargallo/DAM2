@@ -79,11 +79,16 @@ public class Ficha {
     // METODO QUE PASA DE MAYUSCULAS A MINUSCULAS
     private void mayusMinus() {
 
+        setTipo(tipo.toLowerCase());
+        System.out.println(tipo);
+        
+        /*
         char c = this.tipo.charAt(0);
         // +32 EN ASCII PASA MAYUSCULAS A MINUSCULAS
         c += 32;
         this.tipo = String.valueOf(c);
-    }
+        */
+        }
 
     /*
      * METODO QUE DEVUELVE SI UNA FICHA PUEDE HACER UN MOVIMIENTO
@@ -105,17 +110,20 @@ public class Ficha {
         // PEON
         switch (this.tipo) {
             // PEON
-            case Ajedrez.PEON:
+            case ("p"):
+                System.out.println("peon");
                 valido = this.isPeonValido(fichaDestino, tablero);
                 break;
 
             // TORRE
-            case Ajedrez.TORRE:
+            case ("t"):
+                System.out.println("torre");
                 valido = this.isTorreValida(fichaDestino, tablero);
                 break;
 
             // CABALLO
-            case Ajedrez.CABALLO:
+            case ("c"):
+                System.out.println("caballo");
                 // SOLO HACE FALTA ESTA LINEA, NO HAY QUE COMPROBAR PATH (COLISIONES), NI LAS 4 DIRECCIONES
                 // SIEMPRE AVANZA -> 2 + 1 = 3 -> SUMA DE CASILLAS AVANZADAS
                 // AL CUADRADO -> 4 + 1 = 5 -> AL HACERLO AL CUADRADO DAN IGUAL LOS SIGNOS (IGNORA LOS NEGATIVOS) Y VALE PARA TODAS LAS DIRECCIONES A LA VEZ
@@ -124,18 +132,26 @@ public class Ficha {
                 break;
 
             // ALFIL
-            case Ajedrez.ALFIL:
+            case ("a"):
+                System.out.println("alfil");
                 valido = this.isAlfilValido(fichaDestino, tablero);
                 break;
 
             // REINA (COMBINACION/SUMA DE MOVIMIENTOS DE LA TORRE Y EL ALFIL)
-            case Ajedrez.REINA:
+            case ("q"):
+                System.out.println("reina");
                 valido = this.isTorreValida(fichaDestino, tablero)
                         || this.isAlfilValido(fichaDestino, tablero);
+                break;
+                
+            case ("·"):
+                valido = false;
+                System.out.println("agua");
                 break;
 
             // REY
             default:
+                System.out.println("rey");
                 // SE PUEDE MOVER 1 CASILLA EN CUALQUIER DIRECCION
                 // NO HAY QUE COMPROBAR PATH (COLISIONES)
                 valido = (Math.abs(fila - fichaDestino.getFila()) <= 1
@@ -152,7 +168,7 @@ public class Ficha {
         boolean valido;
 
         // INTENTA COMER
-        if (!destino.getTipo().equals(Ajedrez.VACIO))
+        if (!destino.getTipo().equals("·"))
             valido = (Math.abs(columna - destino.getColumna()) == 1)
                     && peonAvanzaUno(destino);
 
@@ -165,9 +181,9 @@ public class Ficha {
                 if (Math.abs(fila - destino.getFila()) == 2){
                     // COMPRUEBA QUE NO SE SALTA UNA FICHA
                     if (this.isBlanca())
-                        valido = tablero.getValueAt(fila - 1, columna).equals(Ajedrez.VACIO);
+                        valido = tablero.getValueAt(fila - 1, columna).equals("·");
                     else
-                        valido = tablero.getValueAt(fila + 1, columna).equals(Ajedrez.VACIO);
+                        valido = tablero.getValueAt(fila + 1, columna).equals("·");
                 }
                 // SE PODRIA MOVER 1 EN EL PRIMER TURNO
                 else
@@ -222,7 +238,7 @@ public class Ficha {
                 && columnaActual == destino.getColumna())){
 
             // SI ENCUENTRA ALGO DIFERENTE A VACIO POR EL CAMINO -> SALE PORQUE COLISIONA
-            if (!tablero.getValueAt(filaActual, columnaActual).equals(Ajedrez.VACIO))
+            if (!tablero.getValueAt(filaActual, columnaActual).equals("·"))
                 return true;
 
             // VA AVANZANDO 1 UNIDAD HACIA POSICION DESTINO
