@@ -118,7 +118,7 @@ public class act9 extends javax.swing.JFrame {
                 System.out.println("Mueve alguna ficha");
                 turnoB = !turnoB;
                 if(finalPartida(jTable1)){
-                    JOptionPane.showMessageDialog(null,"Partida Acabada");
+                    JOptionPane.showMessageDialog(null , "Partida Acabada");
                     llenarTabla();
                 }
                 
@@ -221,18 +221,14 @@ public class act9 extends javax.swing.JFrame {
     
         // METODO QUE DEVUELVE SI LA PARTIDA HA ACABADO
     public boolean finalPartida(javax.swing.JTable tablero) {
-
         // VARIABLES
         boolean reyBlancasVivo = false;
         boolean reyNegrasVivo = false;
         boolean encontrados = false;
-
         int i = 0;
 
         while (!encontrados && i < 8) {
-
             int j = 0;
-
             while (!encontrados && j < 8){
 
                 if (tablero.getValueAt(i, j).equals("k"))
