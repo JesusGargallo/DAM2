@@ -98,42 +98,48 @@ public class act9 extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-        if(!finalPartida(jTable1)){
+        if(!acabarPartida(jTable1)){
+            
+            
         if ((fila == -1 && col == -1) || check == 0) {
+            
             fila = filaTabla();
             col = colTabla();
             check = 1;
             ficha = new Ficha(fila,col,jTable1,turnoB);
+            
+            
             System.out.println("La letra es : " + ficha.getTipo());
             
         } else if (ficha.perteneceTurno()){
+            
             filadestino = filaTabla();
             coldestino = colTabla();
             check = 0;
             fichadestino = new Ficha(filadestino,coldestino,jTable1,turnoB);
+            
             System.out.println("La letra es : " + fichadestino.getTipo());
+            
             if(!fichadestino.perteneceTurno() && ficha.movimientoValido(fichadestino, jTable1)) {
+                
                 jTable1.setValueAt(jTable1.getValueAt(fila, col), filadestino, coldestino);
                 jTable1.setValueAt("·",fila,col);
+                
                 System.out.println("Mueve alguna ficha");
+                
                 turnoB = !turnoB;
-                if(finalPartida(jTable1)){
+                
+                if(acabarPartida(jTable1)){
+                    
                     JOptionPane.showMessageDialog(null , "Partida Acabada");
                     llenarTabla();
                 }
-                
-                        
-                
-            }
-            
-            
+            } 
         } else {
             check = 0;
         }
-        
         } else {
-           System.out.println("No puedes mover mas se acabo sorry");
-            
+           System.out.println("No puedes mover mas se acabo sorry"); 
         }
     }//GEN-LAST:event_jTable1MouseClicked
 
@@ -220,7 +226,7 @@ public class act9 extends javax.swing.JFrame {
     }
     
         // METODO QUE DEVUELVE SI LA PARTIDA HA ACABADO
-    public boolean finalPartida(javax.swing.JTable tablero) {
+    public boolean acabarPartida(javax.swing.JTable tablero) {
         // VARIABLES
         boolean reyBlancasVivo = false;
         boolean reyNegrasVivo = false;
