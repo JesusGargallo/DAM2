@@ -67,19 +67,16 @@ public class NauEspaial extends javax.swing.JFrame {
     }
 
 
-class PanelNau extends JPanel implements Runnable, KeyListener{
-    public static int numNaus=3, numB = 5;    
+class PanelNau extends JPanel implements Runnable, KeyListener{      
     Nau[] nau;
+    int comprueba = 0;
     Nau minave;
     Random rand;
     Shot balas[] = new Shot[5];
-    int distancia, contacto;
-    int comprueba = 0;
+    double distancia = 0, contacto = 1000;
     
+    public static int numB = 5,numNaus = 6;  
     
-    
-    
-
     public PanelNau(){        
         nau = new Nau[numNaus];
         for (int i=0;i<nau.length;i++) {
@@ -91,7 +88,7 @@ class PanelNau extends JPanel implements Runnable, KeyListener{
             int dY=rand.nextInt(3)+1;
             nau[i]= new Nau(i,posX,posY,dX,dY,velocitat);
             }
-        minave = new Nau(numNaus+9999, 240, 430, 0, 0, 5/*rand.nextInt(rand.nextInt(3)+5)*10*/);
+        minave = new Nau(numNaus+9999, 240, 430, 0, 0,5/*rand.nextInt(rand.nextInt(3)+5)*10*/);
         Thread n = new Thread(this);
         n.start();
         
@@ -109,60 +106,76 @@ class PanelNau extends JPanel implements Runnable, KeyListener{
         }
 
     public void paintComponent(Graphics g) {
+        
         super.paintComponent(g);
         for(int i=0; i<nau.length;++i) {
                 if(nau[i] != null){
                     nau[i].pinta(g);
-                }
-                if(minave != null) {
-                    minave.pinta(g);
-                }
+                    
+                    if(minave != null) {
+                        
+                        minave.pinta(g);
+                        contacto = Math.floor(Math.sqrt((minave.getX() - nau[i].getX()) * (minave.getX() - nau[i].getX()) + (minave.getY() - nau[i].getY()) * 
+                                        (minave.getY() - nau[i].getY())));
+                    }
                 
-            for(int j=0; j < minave.shots.size() ;++j) {
-                if((minave.shots.get(j) != null) && (nau[i] != null)) {
-                    if(minave.shots.get(j).getY() >= 0) {
-                        minave.shots.set(j, null);
-                    } else {
+                }
+            if (minave != null ) {  
+                minave.pinta(g);
+                System.out.println(i);
+                
+                for(int j=0; j < minave.shots.size() ;j++) {
+                    
+                    if((minave.shots.get(j) != null) && (nau[i] != null)) {
                         
-                        minave.shots.get(j).pinta(g);
-                        distancia = (int) Math.floor(Math.sqrt(
-                                (minave.shots.get(j).getX() - nau[i].getX()) * 
-                                (minave.shots.get(j).getX() - nau[i].getX()) + 
-                                (minave.shots.get(j).getY() - nau[i].getY()) * 
-                                        (minave.shots.get(j).getY() - nau[i].getY())) );
-                        
-                        if(minave != null) {
-                            contacto = (int) Math.floor(Math.sqrt(
-                                (minave.getX() - nau[i].getX()) * 
-                                (minave.getX() - nau[i].getX()) + 
-                                (minave.getY() - nau[i].getY()) * 
-                                        (minave.getY() - nau[i].getY())) );
+                        if(minave.shots.get(j).getY() <= 0) {
+                            minave.shots.set(j, null);
                             
-                            System.out.println(contacto);
-                            if(contacto < 10) {
-                                if (comprueba == 1) {
-                                    minave = null;
-                                    JOptionPane.showMessageDialog(null,"HAS PERDIDO");
-                                    comprueba = 0;
-                                    System.exit(0);
-                                    
+                        } else {
+                            
+                            minave.shots.get(j).pinta(g);
+                            distancia = Math.floor(Math.sqrt((minave.shots.get(j).getX() - nau[i].getX()) * (minave.shots.get(j).getX() - nau[i].getX()) + (minave.shots.get(j).getY() - nau[i].getY()) * 
+                                    (minave.shots.get(j).getY() - nau[i].getY())) );
+
+                            if(minave != null) {
+                                System.out.println(contacto);
+                                if(contacto < 20) {
+                                    if (comprueba == 1) {
+                                        minave = null;
+                                        JOptionPane.showMessageDialog(null,"HAS PERDIDO ERES MALISIMO");
+                                        comprueba = 0;
+                                        System.exit(0);
+
+                                    }
+                                }
+                            }
+                            if (distancia < 60) {
+                                nau[i] = null;
+                                minave.shots.set(j, null);
+                                numNaus--;
+                                if (numNaus == 0) {
+                                    JOptionPane.showMessageDialog(null,"HAS GANADO ERES EL MEJOR");
+                                    System.exit(0);   
                                 }
                             }
                         }
-                        if (distancia < 50) {
-                            nau[i] = null;
-                            minave.shots.set(j, null);
-                            numNaus--;
-                            if (numNaus == 0) {
-                                JOptionPane.showMessageDialog(null,"HAS GANADO");
-                                System.exit(0);   
-                            }
-                        }
+                    }
+
+                }
+            }
+            if (minave != null && contacto < 50) {
+                System.out.println(contacto);
+                if (contacto < 20) {
+                    if (comprueba == 0) {
+                        minave = null;
+                                
+                        comprueba = 0;
+                        JOptionPane.showMessageDialog(null, "HAS PERDIDO");
+                        System.exit(0);
                     }
                 }
-                
             }
-        }   
+        }
     }
   
         
@@ -318,7 +331,7 @@ class Nau extends Thread {
         y=y + dsy;
         // si arriva als marges ...
         if ( x>= 420 - tx || x<= tx) dsx = - dsx;
-        if ( y >= 325 - ty || y<=ty ) dsy = - dsy;
+        if ( y >= 440 - ty || y<=ty ) dsy = - dsy;
         }
     
     public synchronized void pinta (Graphics g) {
