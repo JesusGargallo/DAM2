@@ -72,7 +72,7 @@ class PanelNau extends JPanel implements Runnable, KeyListener{
     int comprueba = 0;
     Nau minave;
     Random rand;
-    Shot balas[] = new Shot[5];
+    Shoter balas[] = new Shoter[5];
     double distancia = 0, contacto = 1000;
     
     public static int numB = 5,numNaus = 6;  
@@ -170,7 +170,8 @@ class PanelNau extends JPanel implements Runnable, KeyListener{
                         minave = null;
                                 
                         comprueba = 0;
-                        JOptionPane.showMessageDialog(null, "HAS PERDIDO");
+                        JOptionPane.showMessageDialog(null, "HAS PERDIDO ERES MALISIMO "
+                                + "TE MATAN HAS LAS NAVES");
                         System.exit(0);
                     }
                 }
@@ -227,7 +228,7 @@ class Nau extends Thread {
     private int dsx,dsy,v;
     private int tx = 10;
     private int ty = 10;
-    ArrayList<Shot> shots = new ArrayList<Shot>();
+    ArrayList<Shoter> shots = new ArrayList<Shoter>();
 
     private String img = "/images/nau.jpg";
 
@@ -279,11 +280,11 @@ class Nau extends Thread {
         this.ty = ty;
     }
 
-    public ArrayList<Shot> getShots() {
+    public ArrayList<Shoter> getShots() {
         return shots;
     }
 
-    public void setShots(ArrayList<Shot> shots) {
+    public void setShots(ArrayList<Shoter> shots) {
         this.shots = shots;
     }
 
@@ -368,18 +369,18 @@ class Nau extends Thread {
     public void disparar() {
         System.out.println("pium");
         
-        shots.add(new Shot(this.x, this.y ,5));
+        shots.add(new Shoter(this.x, this.y ,5));
     }
     
 }
 
  
-class Shot extends Thread {
+class Shoter extends Thread {
     private int x,y,v;
     private int dsy = 1, dsx = 0;
     private Image image;
     
-    public Shot(int x, int y, int v) {
+    public Shoter(int x, int y, int v) {
         this.x = x;
         this.y = y;
         this.v = v;
