@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -67,13 +68,17 @@ public class NauEspaial extends javax.swing.JFrame {
 
 
 class PanelNau extends JPanel implements Runnable, KeyListener{
-    public static int numNaus=3;    
+    public static int numNaus=3, numB = 5;    
     Nau[] nau;
     Nau minave;
     Random rand;
     Shot balas[] = new Shot[5];
-    //shot
-    //Y
+    int distancia, contacto;
+    int comprueba = 0;
+    
+    
+    
+    
 
     public PanelNau(){        
         nau = new Nau[numNaus];
@@ -105,11 +110,60 @@ class PanelNau extends JPanel implements Runnable, KeyListener{
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        for(int i=0; i<nau.length;++i) nau[i].pinta(g);
-        minave.pinta(g);
-        for(int i=0; i < minave.shots.size() ;++i) minave.shots.get(i).pinta(g);
-            
-        }
+        for(int i=0; i<nau.length;++i) {
+                if(nau[i] != null){
+                    nau[i].pinta(g);
+                }
+                if(minave != null) {
+                    minave.pinta(g);
+                }
+                
+            for(int j=0; j < minave.shots.size() ;++j) {
+                if((minave.shots.get(j) != null) && (nau[i] != null)) {
+                    if(minave.shots.get(j).getY() >= 0) {
+                        minave.shots.set(j, null);
+                    } else {
+                        
+                        minave.shots.get(j).pinta(g);
+                        distancia = (int) Math.floor(Math.sqrt(
+                                (minave.shots.get(j).getX() - nau[i].getX()) * 
+                                (minave.shots.get(j).getX() - nau[i].getX()) + 
+                                (minave.shots.get(j).getY() - nau[i].getY()) * 
+                                        (minave.shots.get(j).getY() - nau[i].getY())) );
+                        
+                        if(minave != null) {
+                            contacto = (int) Math.floor(Math.sqrt(
+                                (minave.getX() - nau[i].getX()) * 
+                                (minave.getX() - nau[i].getX()) + 
+                                (minave.getY() - nau[i].getY()) * 
+                                        (minave.getY() - nau[i].getY())) );
+                            
+                            System.out.println(contacto);
+                            if(contacto < 10) {
+                                if (comprueba == 1) {
+                                    minave = null;
+                                    JOptionPane.showMessageDialog(null,"HAS PERDIDO");
+                                    comprueba = 0;
+                                    System.exit(0);
+                                    
+                                }
+                            }
+                        }
+                        if (distancia < 50) {
+                            nau[i] = null;
+                            minave.shots.set(j, null);
+                            numNaus--;
+                            if (numNaus == 0) {
+                                JOptionPane.showMessageDialog(null,"HAS GANADO");
+                                System.exit(0);   
+                            }
+                        }
+                    }
+                }
+                
+            }
+        }   
+    }
   
         
 
@@ -163,6 +217,78 @@ class Nau extends Thread {
     ArrayList<Shot> shots = new ArrayList<Shot>();
 
     private String img = "/images/nau.jpg";
+
+    public int getNumero() {
+        return numero;
+    }
+
+    public void setNumero(int numero) {
+        this.numero = numero;
+    }
+
+    public int getDsx() {
+        return dsx;
+    }
+
+    public void setDsx(int dsx) {
+        this.dsx = dsx;
+    }
+
+    public int getDsy() {
+        return dsy;
+    }
+
+    public void setDsy(int dsy) {
+        this.dsy = dsy;
+    }
+
+    public int getV() {
+        return v;
+    }
+
+    public void setV(int v) {
+        this.v = v;
+    }
+
+    public int getTx() {
+        return tx;
+    }
+
+    public void setTx(int tx) {
+        this.tx = tx;
+    }
+
+    public int getTy() {
+        return ty;
+    }
+
+    public void setTy(int ty) {
+        this.ty = ty;
+    }
+
+    public ArrayList<Shot> getShots() {
+        return shots;
+    }
+
+    public void setShots(ArrayList<Shot> shots) {
+        this.shots = shots;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
+    public Image getImage() {
+        return image;
+    }
+
+    public void setImage(Image image) {
+        this.image = image;
+    }
     private Image image;
     
     public Nau(int numero, int x, int y, int dsx, int dsy, int v ) {
@@ -248,6 +374,54 @@ class Shot extends Thread {
         Thread the = new Thread(this);
         image = new ImageIcon(Nau.class.getResource("shot.png")).getImage();
         this.start();
+    }             
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public int getV() {
+        return v;
+    }
+
+    public void setV(int v) {
+        this.v = v;
+    }
+
+    public int getDsy() {
+        return dsy;
+    }
+
+    public void setDsy(int dsy) {
+        this.dsy = dsy;
+    }
+
+    public int getDsx() {
+        return dsx;
+    }
+
+    public void setDsx(int dsx) {
+        this.dsx = dsx;
+    }
+
+    public Image getImage() {
+        return image;
+    }
+
+    public void setImage(Image image) {
+        this.image = image;
     }
     
     public void run() {
