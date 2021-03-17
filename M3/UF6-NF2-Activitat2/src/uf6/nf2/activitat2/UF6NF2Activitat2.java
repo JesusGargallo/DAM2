@@ -13,10 +13,10 @@ public class UF6NF2Activitat2 {
     
     public static void calcul (int fila, int pedres){
         if (fila == pedres){
-            System.out.println(fila + ", " + 0);
+            System.out.println("Fila: " + fila + ", Sobra: " + 0);
             
         } else if (fila > pedres){
-            System.out.println((fila -1) + ", " + pedres);
+            System.out.println("Fila: " + (fila -1) + ", Sobra: " + pedres);
             
         }else if (fila < pedres){
             calcul(fila + 1, pedres - fila);
