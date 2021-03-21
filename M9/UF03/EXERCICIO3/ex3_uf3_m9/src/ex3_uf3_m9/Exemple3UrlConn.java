@@ -25,8 +25,8 @@ public class Exemple3UrlConn {
                     System.out.println(map.getKey() + " con el valor " + map.getValue());
                 }
 
-                for (int i = 1; i <= Integer.valueOf(args[1]); i++) {
-                    System.out.println(i + " " + conn.getHeaderField(i));
+                for (int j = 1; j <= Integer.valueOf(args[1]); j++) {
+                    System.out.println(j + " " + conn.getHeaderField(j));
                 }
 
                 BufferedReader pagina
