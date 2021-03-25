@@ -1,3 +1,4 @@
+
 package act5_m9;
 
 import java.net.*;
@@ -25,7 +26,7 @@ public class ClientTCP2 {
 		//Lectura teclat
 		cadena = in.readLine();
 		
-		while (cadena != null) {
+		while (!cadena.equals("")) {
 			
 			//Enviament cadena al servidor
 			fsortida.println(cadena);
