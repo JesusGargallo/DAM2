@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package a10.uf6.nf3.activitat1.divisiontester;
+package divisiontester;
 
 import java.util.Scanner;
 
@@ -11,7 +11,7 @@ import java.util.Scanner;
  *
  * @author Alumne
  */
-public class A10UF6NF3Activitat1DivisionTester {
+public class DivisionTester {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
