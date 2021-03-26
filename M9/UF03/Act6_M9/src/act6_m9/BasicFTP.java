@@ -22,6 +22,7 @@ public class BasicFTP {
 		//Usuari FTP
 		String usuari = "anonymous";
 		String contrasenya = "guest";
+                
 		
 		try {
 			
