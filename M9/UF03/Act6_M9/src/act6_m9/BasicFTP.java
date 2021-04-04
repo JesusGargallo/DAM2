@@ -3,26 +3,29 @@ package act6_m9;
 import java.io.*;
 import java.util.Scanner;
 import org.apache.commons.net.ftp.*;
+/**
+ *
+ * @author Jesus
+ */
 
-public class BasicFTP {
+
+public class BasicFTP{
 	
-	public static void main (String[] args) {
+    static Scanner scan = new Scanner (System.in);
+	
+        public static void main (String[] args) {
 		
-		// Declarem el Scanner
-		Scanner teclado = new Scanner(System.in);
-		
+                
 		//Servidor FTP
 		FTPClient client = new FTPClient();
-		// Demanem el nom del servidor FTP i el guardem
-		System.out.println("Introdueix el servidor FTP al que et "
-				+ "vols conectar(ex: ftp.urv.es)");
-		String ServerFTP = teclado.nextLine();
+		String ServerFTP;
+                System.out.println("Introdueix el server FTP: ");
+                ServerFTP = scan.nextLine();
 		System.out.println("Ens connectem al servidor: "+ServerFTP);
 		
 		//Usuari FTP
 		String usuari = "anonymous";
 		String contrasenya = "guest";
-                
 		
 		try {
 			
