@@ -8,7 +8,6 @@ import org.apache.commons.net.ftp.*;
  * @author Jesus
  */
 
-
 public class BasicFTP{
 	
     static Scanner scan = new Scanner (System.in);
@@ -81,4 +80,3 @@ public class BasicFTP{
 	}
 
 }
-
