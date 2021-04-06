@@ -43,8 +43,6 @@ public class Act8_m9 {
 			http.sendPost();
 		}
 
-
-
 	}
 
 	// HTTP GET request
