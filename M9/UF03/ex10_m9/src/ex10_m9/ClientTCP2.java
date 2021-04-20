@@ -27,9 +27,9 @@ public class ClientTCP2 {
 		cadena = in.readLine();
 		
 		while (cadena != null && !cadena.equals("")) {
-			
 			//Enviament cadena al servidor
-			fsortida.println(cadena);
+			//fsortida.println(name + "/Log " + cadena);
+                        fsortida.println(cadena);
 			//Rebuda cadena del servidor
 			eco = fentrada.readLine();
 			System.out.println("  =>ECO: "+eco);
