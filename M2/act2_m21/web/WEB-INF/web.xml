@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <servlet>
+        <servlet-name>RepeatVisitor</servlet-name>
+        <servlet-class>coreservlets.RepeatVisitor</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>registrationform</servlet-name>
+        <servlet-class>coreservlets.registrationform</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ShowReferers</servlet-name>
+        <servlet-class>coreservlets.ShowReferers</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RepeatVisitor</servlet-name>
+        <url-pattern>/RepeatVisitor</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>registrationform</servlet-name>
+        <url-pattern>/registrationform</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ShowReferers</servlet-name>
+        <url-pattern>/ShowReferers</url-pattern>
+    </servlet-mapping>
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+</web-app>
