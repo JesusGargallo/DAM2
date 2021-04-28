@@ -16,13 +16,13 @@
             <jsp:useBean id="color" class="coreservlets.ColorBean" scope="application"/>
             <jsp:setProperty name="color" property="*"/>
             
-            background: <jsp:getProperty name="color" property="backgroundC"/>;
-            color: <jsp:getProperty name="color" property="foregroundC"/>;
+            background: <jsp:getProperty name="color" property="background"/>;
+            color: <jsp:getProperty name="color" property="foreground"/>;
         }
         
     </style>
     <body>
-        <h1>Show Colors (1)</h1>
+        <h1>Show Colors (3)</h1>
         <p>blah blah blah</p>
     </body>
 </html>
