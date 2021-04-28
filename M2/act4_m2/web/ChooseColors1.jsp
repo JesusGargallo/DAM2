@@ -11,16 +11,15 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
     </head>
+    <style>
+        body {
+            background-color: <%=session.getAttribute("background")%>;
+            color: <%=session.getAttribute("foreground")%>;
+        }
+        
+    </style>
     <body>
-        <form action="showcolor" method="POST">
-            <label>Foreground color:</label>
-            <input type="text" name="foregroundC"/>
-            <br><br>
-            <label>Background color:</label>
-            <input type="text" name="backgroundC"/>
-            <br><br>
-            <input type="submit" value="showcolor"/>
-            
-        </form>
+        <h1>Show Colors (1)</h1>
+        <p>blah blah blah</p>
     </body>
 </html>

@@ -32,23 +32,10 @@ public class showcolor extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            String foreground = request.getParameter("foregroundC");
-            String background = request.getParameter("backgroundC");
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<style>");
-            out.println("body {");
-            out.println("background: " + background+";");
-            out.println("color: " + foreground +";");
-            out.println("}");
-            out.println("</style>");
-            out.println("<title>Servlet showcolor</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet showcolor at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+            request.getSession().setAttribute("foreground", new String(request.getParameter("foreground")));
+            request.getSession().setAttribute("background", new String(request.getParameter("background")));
+            
+            response.sendRedirect("ChooseColors1.jsp");
         }
     }
 

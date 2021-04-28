@@ -11,9 +11,15 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <h1>Exercise: Beans</h1>
-        <li><a href="formulario1.html">ChooseColors1</a></li>
-        <li><a href="formulario2.html">ChooseColors2</a></li>
-        <li><a href="formulario3.html">ChooseColors3</a></li>
+        <form action="ChooseColors2.jsp" method="POST">
+            <label>Foreground color:</label>
+            <input type="text" name="foregroundC"/>
+            <br><br>
+            <label>Background color:</label>
+            <input type="text" name="backgroundC"/>
+            <br><br>
+            <input type="submit" value="showcolor"/>
+            
+        </form>
     </body>
 </html>
