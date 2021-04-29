@@ -44,12 +44,12 @@ public class ServidorTCP extends Thread {
             System.err.println("Error creando flujo de salida o entrada al cliente " + numCliente);
         }
 
+        
         // CONTROLA ERRORES RECIBIENDO MENSAJES DEL CLIENTE
         try {
             // VA MOSTRANDO LOS MENSAJES DEL CLIENTE HASTA QUE SE DESCONECTE
             if (fEntrada != null) {
                 while ((cadena = fEntrada.readLine()) != null) {
-
                     fSalida.println(cadena);
                     System.out.println("Cliente " + numCliente + " - Recibiendo: " + cadena);
                     if (cadena.equals("*")) break;
