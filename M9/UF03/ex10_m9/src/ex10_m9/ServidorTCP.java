@@ -15,6 +15,11 @@ public class ServidorTCP extends Thread {
     private final Socket cliente;
     private final int numCliente;
     private boolean conActiva;
+    
+    private boolean Pmensaje;
+    
+    public static PrintWriter fSalida[];
+    public static ServidorTCP clientes[];
 
     // CONSTRUCTOR
     public ServidorTCP(Socket clienteConectado, int i) {
@@ -50,8 +55,20 @@ public class ServidorTCP extends Thread {
             // VA MOSTRANDO LOS MENSAJES DEL CLIENTE HASTA QUE SE DESCONECTE
             if (fEntrada != null) {
                 while ((cadena = fEntrada.readLine()) != null) {
+                    
+                    if(cadena.startsWith("[log]")){
+                        
+                        String[] parts = cadena.split("]");
+                        this.setName(parts[1]);
+                        
+                        
+                    } else if (!cadena.startsWith("[log]")) {
+                       System.out.println("Debes iniciar sesion primero");
+                    }
+                    
+                    
                     fSalida.println(cadena);
-                    System.out.println("Cliente " + numCliente + " - Recibiendo: " + cadena);
+                    System.out.println("Cliente " + this.getName() + " - Recibiendo: " + cadena);
                     if (cadena.equals("*")) break;
                 }
             }
@@ -103,9 +120,13 @@ public class ServidorTCP extends Thread {
         int totalClientes = 0;
         System.out.println("Cuantos clientes puede soportar ? ");
         totalClientes = sc.nextInt();
+        ServidorTCP.clientes = new ServidorTCP[totalClientes];
+        ServidorTCP.fSalida = new PrintWriter[totalClientes];
+        
+        
         final int numPort = 60000;
         ServerSocket servidor = null;
-        ServidorTCP clientes[] = new ServidorTCP[totalClientes];
+        
 
         // CONTROLA LA CONEXION DEL SERVIDOR
         try {
@@ -129,12 +150,14 @@ public class ServidorTCP extends Thread {
                 Socket clienteConectado = null;
                 if (servidor != null) {
                     clienteConectado = servidor.accept();
+                    // LANZA UN HILO CON UN NUEVO CLIENTE
+                    clientes[i] = new ServidorTCP(clienteConectado, i);
+                    fSalida[i] = new PrintWriter(clientes[i].cliente.getOutputStream(), true);
+                    clientes[i].start();
                 }
                 System.out.println("Cliente conectado... " + i);
 
-                // LANZA UN HILO CON UN NUEVO CLIENTE
-                clientes[i] = new ServidorTCP(clienteConectado, i);
-                clientes[i].start();
+                
 
             }
         } catch (IOException e) {

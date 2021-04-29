@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -44,8 +45,9 @@ public class ClienteTCP extends Thread {
 
     public static void main(String[] args) throws Exception {
 
+        Scanner sc = new Scanner(System.in);
         String cadena;
-
+        
         String host = "localhost";
         int puerto = 60000; // Puerto remoto
 
@@ -61,13 +63,16 @@ public class ClienteTCP extends Thread {
 
         Thread thread = new Thread(clienteT);
         thread.start();
-
-        System.out.println("Introduce la cadena: ");
-
-        // LECTURA TECLADO
+        
+        System.out.println("Dime tu nombre:");
         cadena = in.readLine();
+        
+//        System.out.println("Introduce la cadena: ");
+//
+//        // LECTURA TECLADO
+//        cadena = in.readLine();
 
-        while (!cadena.equals("/salir")) {
+        while (!cadena.equals("-salir")) {
 
             // ENVIAR CADENA AL SERVIDOR
             fSalida.println(cadena);
