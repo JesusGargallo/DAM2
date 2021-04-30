@@ -9,15 +9,16 @@ import java.net.Socket;
 import java.util.Scanner;
 
 public class ServidorTCP extends Thread {
+
     static Scanner sc = new Scanner(System.in);
-    
+
     // ATRIBUTOS
     private final Socket cliente;
     private final int numCliente;
     private boolean conActiva;
-    
-    private boolean Pmensaje;
-    
+
+    private boolean Pmensaje = true;
+
     public static PrintWriter fSalida[];
     public static ServidorTCP clientes[];
 
@@ -49,27 +50,39 @@ public class ServidorTCP extends Thread {
             System.err.println("Error creando flujo de salida o entrada al cliente " + numCliente);
         }
 
-        
         // CONTROLA ERRORES RECIBIENDO MENSAJES DEL CLIENTE
         try {
             // VA MOSTRANDO LOS MENSAJES DEL CLIENTE HASTA QUE SE DESCONECTE
             if (fEntrada != null) {
                 while ((cadena = fEntrada.readLine()) != null) {
-                    
-                    if(cadena.startsWith("[log]")){
-                        
-                        String[] parts = cadena.split("]");
-                        this.setName(parts[1]);
-                        
-                        
-                    } else if (!cadena.startsWith("[log]")) {
-                       System.out.println("Debes iniciar sesion primero");
+
+                    if (Pmensaje) {
+                        if (cadena.startsWith("[log]")) {
+                            String[] parts = cadena.split("]");
+                            
+                            if(parts.length == 2){
+                               if(!parts[1].trim().equals("")){
+                                   this.setName(parts[1]); 
+                                   Pmensaje = !Pmensaje; 
+                               }else{
+                                   cadena = "No seas troll";
+                               }  
+                            }else {
+                                cadena = "No vale poner el nombre en blanco";
+                            }
+                             
+                        } else if (!cadena.startsWith("[log]")) {
+                            cadena = "Debes iniciar sesion primero";
+                        }
+                    } else if(!Pmensaje && cadena.startsWith("[log]")){
+                        cadena = "Ya estas iniciado no puedes volver a iniciar Pelotudo";
                     }
-                    
-                    
+
                     fSalida.println(cadena);
                     System.out.println("Cliente " + this.getName() + " - Recibiendo: " + cadena);
-                    if (cadena.equals("*")) break;
+                    if (cadena.equals("*")) {
+                        break;
+                    }
                 }
             }
         } catch (IOException e) {
@@ -102,7 +115,7 @@ public class ServidorTCP extends Thread {
         int i = 0;
         while (i < totalClientes && !clienteConectado) {
 
-            if (c[i] != null){
+            if (c[i] != null) {
                 clienteConectado = c[i].isConActiva();
             }
             fin = !clienteConectado;
@@ -115,18 +128,15 @@ public class ServidorTCP extends Thread {
     // MAIN
     public static void main(String[] args) {
 
-        
         // VARIABLES
         int totalClientes = 0;
         System.out.println("Cuantos clientes puede soportar ? ");
         totalClientes = sc.nextInt();
         ServidorTCP.clientes = new ServidorTCP[totalClientes];
         ServidorTCP.fSalida = new PrintWriter[totalClientes];
-        
-        
+
         final int numPort = 60000;
         ServerSocket servidor = null;
-        
 
         // CONTROLA LA CONEXION DEL SERVIDOR
         try {
@@ -157,8 +167,6 @@ public class ServidorTCP extends Thread {
                 }
                 System.out.println("Cliente conectado... " + i);
 
-                
-
             }
         } catch (IOException e) {
             System.err.println("Error conectando con cliente");
@@ -171,7 +179,7 @@ public class ServidorTCP extends Thread {
         try {
             // CUANDO EL SERVIDOR HA LLEGADO AL MAXIMO DE CLIENTES, COMPRUEBA CONSTANTEMENTE
             // SI SE HAN DESCONECTADO TODOS LOS CLIENTES
-            while (!finalServer(clientes, totalClientes)){
+            while (!finalServer(clientes, totalClientes)) {
                 try {
                     Thread.sleep(100);
                 } catch (InterruptedException e) {
