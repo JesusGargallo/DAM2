@@ -19,6 +19,9 @@ public class ServidorTCP extends Thread {
 
     private static int totalClientes;
     private boolean Pmensaje = true;
+    
+    private String mensajeto;
+    private String quien;
 
     public static PrintWriter fSalida1[];
     public static ServidorTCP clientes[];
@@ -111,9 +114,11 @@ public class ServidorTCP extends Thread {
                         String[] parts = cadena.split("]");
                         if (parts.length == 3) {
                             if (!parts[1].trim().equals("")) {
+                                mensajeto = parts[2];
+                                quien = parts[1];
                                 for(int i=0; i < totalClientes ; i++){
-                                    if(!clientes[i].getName().equals(this.getName())){
-                                        fSalida1[i].println(parts[1]);
+                                    if(clientes[i].getName().equals(quien)){
+                                        fSalida1[i].println(this.getName()+ " " + mensajeto);
                                     }
                                 }
                             } else {
