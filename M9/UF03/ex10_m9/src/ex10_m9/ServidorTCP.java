@@ -104,6 +104,27 @@ public class ServidorTCP extends Thread {
                             fSalida.println(cadena);
                         }
                     } 
+                    
+                    
+                    //MENSAJE DIRECTO A UN CLIENTE EN CONCRETO
+                    if (cadena.startsWith("[mensajeto]")) {
+                        String[] parts = cadena.split("]");
+                        if (parts.length == 3) {
+                            if (!parts[1].trim().equals("")) {
+                                for(int i=0; i < totalClientes ; i++){
+                                    if(!clientes[i].getName().equals(this.getName())){
+                                        fSalida1[i].println(parts[1]);
+                                    }
+                                }
+                            } else {
+                                cadena = "No seas troll";
+                                fSalida.println(cadena);
+                            }
+                        } else {
+                            cadena = "No vale poner el nombre en blanco";
+                            fSalida.println(cadena);
+                        }
+                    }
 
                     
                     System.out.println("Cliente " + this.getName() + " - Recibiendo: " + cadena);
