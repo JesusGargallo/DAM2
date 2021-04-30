@@ -17,9 +17,10 @@ public class ServidorTCP extends Thread {
     private final int numCliente;
     private boolean conActiva;
 
+    private static int totalClientes;
     private boolean Pmensaje = true;
 
-    public static PrintWriter fSalida[];
+    public static PrintWriter fSalida1[];
     public static ServidorTCP clientes[];
 
     // CONSTRUCTOR
@@ -55,30 +56,56 @@ public class ServidorTCP extends Thread {
             // VA MOSTRANDO LOS MENSAJES DEL CLIENTE HASTA QUE SE DESCONECTE
             if (fEntrada != null) {
                 while ((cadena = fEntrada.readLine()) != null) {
-
+                    
+                    //LOGIN
                     if (Pmensaje) {
                         if (cadena.startsWith("[log]")) {
                             String[] parts = cadena.split("]");
-                            
-                            if(parts.length == 2){
-                               if(!parts[1].trim().equals("")){
-                                   this.setName(parts[1]); 
-                                   Pmensaje = !Pmensaje; 
-                               }else{
-                                   cadena = "No seas troll";
-                               }  
-                            }else {
+
+                            if (parts.length == 2) {
+                                if (!parts[1].trim().equals("")) {
+                                    this.setName(parts[1]);
+                                    Pmensaje = !Pmensaje;
+                                } else {
+                                    cadena = "No seas troll";
+                                    fSalida.println(cadena);
+                                }
+                            } else {
                                 cadena = "No vale poner el nombre en blanco";
+                                fSalida.println(cadena);
                             }
-                             
+                            
                         } else if (!cadena.startsWith("[log]")) {
                             cadena = "Debes iniciar sesion primero";
+                            fSalida.println(cadena);
                         }
-                    } else if(!Pmensaje && cadena.startsWith("[log]")){
+                    } else if (!Pmensaje && cadena.startsWith("[log]")) {
                         cadena = "Ya estas iniciado no puedes volver a iniciar Pelotudo";
+                        fSalida.println(cadena);
                     }
+                    
+                    //MENSAJE
+                    if (cadena.startsWith("[mensaje]")) {
+                        String[] parts = cadena.split("]");
+                        if (parts.length == 2) {
+                            if (!parts[1].trim().equals("")) {
+                                for(int i=0; i < totalClientes ; i++){
+                                    if(!clientes[i].getName().equals(this.getName())){
+                                        fSalida1[i].println(parts[1]);
+                                        
+                                    }
+                                }
+                            } else {
+                                cadena = "No seas troll";
+                                fSalida.println(cadena);
+                            }
+                        } else {
+                            cadena = "No vale poner el nombre en blanco";
+                            fSalida.println(cadena);
+                        }
+                    } 
 
-                    fSalida.println(cadena);
+                    
                     System.out.println("Cliente " + this.getName() + " - Recibiendo: " + cadena);
                     if (cadena.equals("*")) {
                         break;
@@ -129,11 +156,11 @@ public class ServidorTCP extends Thread {
     public static void main(String[] args) {
 
         // VARIABLES
-        int totalClientes = 0;
+        
         System.out.println("Cuantos clientes puede soportar ? ");
         totalClientes = sc.nextInt();
         ServidorTCP.clientes = new ServidorTCP[totalClientes];
-        ServidorTCP.fSalida = new PrintWriter[totalClientes];
+        ServidorTCP.fSalida1 = new PrintWriter[totalClientes];
 
         final int numPort = 60000;
         ServerSocket servidor = null;
@@ -162,7 +189,7 @@ public class ServidorTCP extends Thread {
                     clienteConectado = servidor.accept();
                     // LANZA UN HILO CON UN NUEVO CLIENTE
                     clientes[i] = new ServidorTCP(clienteConectado, i);
-                    fSalida[i] = new PrintWriter(clientes[i].cliente.getOutputStream(), true);
+                    fSalida1[i] = new PrintWriter(clientes[i].cliente.getOutputStream(), true);
                     clientes[i].start();
                 }
                 System.out.println("Cliente conectado... " + i);

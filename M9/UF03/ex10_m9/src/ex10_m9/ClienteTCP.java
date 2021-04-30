@@ -72,7 +72,7 @@ public class ClienteTCP extends Thread {
 //        // LECTURA TECLADO
 //        cadena = in.readLine();
 
-        while (!cadena.equals("-salir")) {
+        while (!cadena.equals("[salir]")) {
 
             // ENVIAR CADENA AL SERVIDOR
             fSalida.println(cadena);
