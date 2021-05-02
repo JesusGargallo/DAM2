@@ -130,6 +130,14 @@ public class ServidorTCP extends Thread {
                             fSalida.println(cadena);
                         }
                     }
+                    
+                    //listar usuarios
+                    if (cadena.startsWith("[list]")) {
+                        for(int i = 0; i < totalClientes ;i++){
+                            fSalida.println(clientes[i].getName());
+                        }
+                        
+                    }
 
                     
                     System.out.println("Cliente " + this.getName() + " - Recibiendo: " + cadena);
