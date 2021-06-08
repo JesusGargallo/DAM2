@@ -109,7 +109,7 @@ public class jLogin extends javax.swing.JFrame {
         session.beginTransaction();
         Usuaris usuari = (Usuaris) session.createQuery("SELECT u from Usuaris u WHERE usuari = '" + tusuari.getText() + "' AND contrasenya = '" + contrasenya.getText() + "'").uniqueResult();
         session.getTransaction().commit();
-        if (usuari.equals(null)) {
+        if (usuari == null) {
             textoerror.setText("error");
         } else {
             textoerror.setText("login correcto");
