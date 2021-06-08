@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 08/06/2021 17:31:23 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="uf2m6.Usuaris" table="usuaris" catalog="m6uf2" optimistic-lock="version">
+        <id name="usuari" type="string">
+            <column name="usuari" length="25" />
+            <generator class="assigned" />
+        </id>
+        <property name="contrasenya" type="string">
+            <column name="contrasenya" length="10" not-null="true" />
+        </property>
+        <property name="pregunta" type="string">
+            <column name="pregunta" length="35" not-null="true" />
+        </property>
+        <property name="resposta" type="string">
+            <column name="resposta" length="10" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>
